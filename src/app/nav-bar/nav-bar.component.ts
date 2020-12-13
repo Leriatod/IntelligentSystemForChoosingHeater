@@ -1,28 +1,22 @@
-import { AngularFireAuth } from '@angular/fire/auth';
-import { Component, OnInit } from '@angular/core';
-import * as firebase from 'firebase';
-import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
+import { AuthService } from './../auth.service';
 
 @Component({
   selector: 'nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.scss']
 })
-export class NavBarComponent implements OnInit {
+export class NavBarComponent {
   isExpanded = false;
 
-  user$: Observable<firebase.User>;
+  constructor(public auth: AuthService) { }
 
-  constructor(private afAuth: AngularFireAuth) { }
-  ngOnInit() {
-    this.user$ = this.afAuth.authState;
+  logout() {
+    this.auth.logout();
   }
+
 
   toggle() {
     this.isExpanded = !this.isExpanded;
-  }
-
-  logout() {
-    this.afAuth.signOut();
   }
 }
