@@ -18,14 +18,19 @@
         <div class="collapse navbar-collapse" [class.show]="isExpanded" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto"></ul>
             <ul class="navbar-nav">
-                <li class="nav-item dropdown active" ngbDropdown>
+                <ng-template #anonymousUser>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/login" routerLinkActive="active">Вхід</a>
+                    </li>
+                </ng-template>
+                <li class="nav-item dropdown" *ngIf="user$ | async as user; else anonymousUser" ngbDropdown>
                     <a class="nav-link dropdown-toggle" ngbDropdownToggle id="navbarDropdown2">
-                      Адміністратор
+                      {{ user.displayName }}
                     </a>
                     <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
                       <a ngbDropdownItem href="#">Список замовлень</a>
                       <a ngbDropdownItem href="#">Список товарів</a>
-                      <a ngbDropdownItem href="#">Вийти</a>
+                      <a ngbDropdownItem (click)="logout()">Вихід</a>
                     </div>
                   </li>
             </ul>

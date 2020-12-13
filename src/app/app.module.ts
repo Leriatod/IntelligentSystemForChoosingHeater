@@ -9,11 +9,14 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
+import { LoginComponent } from './login/login.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavBarComponent
+    NavBarComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +26,12 @@ import { environment } from 'src/environments/environment';
     AngularFireDatabaseModule,
     AngularFireAuthModule,
 
-    NgbModule
+    NgbModule,
+
+    RouterModule.forRoot([
+      //{ path: '', component: HomeComponent },
+      { path: 'login', component: LoginComponent },
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]
