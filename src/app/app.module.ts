@@ -1,3 +1,4 @@
+import { UserService } from './user.service';
 import { AuthGuard as AuthGuard } from './auth-guard.service';
 import { HomeComponent } from './home/home.component';
 import { AuthService } from './auth.service';
@@ -43,13 +44,14 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
       { path: 'login', component: LoginComponent },
 
       { path: 'my-orders', component: MyOrdersComponent, canActivate: [AuthGuard] },
-      
+
       { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard] },
       { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard] },
     ])
   ],
   providers: [
     AuthService,
+    UserService,
     AuthGuard,
   ],
   bootstrap: [AppComponent]
