@@ -1,3 +1,4 @@
+import { AuthGuard as AuthGuard } from './auth-guard.service';
 import { HomeComponent } from './home/home.component';
 import { AuthService } from './auth.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -40,12 +41,17 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'my-orders', component: MyOrdersComponent },
-      { path: 'admin/orders', component: AdminOrdersComponent },
-      { path: 'admin/products', component: AdminProductsComponent },
+
+      { path: 'my-orders', component: MyOrdersComponent, canActivate: [AuthGuard] },
+      
+      { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard] },
+      { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard] },
     ])
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    AuthGuard,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
