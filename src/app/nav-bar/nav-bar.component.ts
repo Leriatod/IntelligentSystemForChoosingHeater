@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AppUser } from '../models/app-user';
 import { AuthService } from './../auth.service';
 
 @Component({
@@ -6,10 +7,15 @@ import { AuthService } from './../auth.service';
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.scss']
 })
-export class NavBarComponent {
+export class NavBarComponent implements OnInit {
   isExpanded = false;
+  appUser: AppUser;
 
-  constructor(public auth: AuthService) { }
+  constructor(private auth: AuthService) { }
+  
+  ngOnInit() {
+    this.auth.appUser$.subscribe(appUser => this.appUser = appUser);
+  }
 
   logout() {
     this.auth.logout();

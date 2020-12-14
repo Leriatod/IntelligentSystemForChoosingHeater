@@ -22,14 +22,16 @@
                         <a class="nav-link" routerLink="/login" routerLinkActive="active">Вхід</a>
                     </li>
                 </ng-template>
-                <li class="nav-item dropdown" *ngIf="auth.user$ | async as user; else anonymousUser" ngbDropdown>
+                <li class="nav-item dropdown" *ngIf="appUser; else anonymousUser" ngbDropdown>
                     <a class="nav-link dropdown-toggle" ngbDropdownToggle id="navbarDropdown2">
-                      {{ user.displayName }}
+                      {{ appUser.name }}
                     </a>
                     <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
                       <a ngbDropdownItem routerLink="/my-orders">Мої замовлення</a>  
-                      <a ngbDropdownItem routerLink="/admin/orders">Всі замовлення</a>
-                      <a ngbDropdownItem routerLink="/admin/products">Список товарів</a>
+                      <ng-container *ngIf="appUser.isAdmin">
+                        <a ngbDropdownItem routerLink="/admin/orders">Всі замовлення</a>
+                        <a ngbDropdownItem routerLink="/admin/products">Список товарів</a>
+                      </ng-container>
                       <a ngbDropdownItem (click)="logout()">Вихід</a>
                     </div>
                   </li>
