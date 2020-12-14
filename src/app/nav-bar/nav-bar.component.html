@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">Ріо</a>
+        <a class="navbar-brand" routerLink="/">Ріо</a>
         <button 
             (click)="toggle()" 
             class="navbar-toggler" 
@@ -9,7 +9,6 @@
             data-toggle="collapse" 
             data-target="#navbarsExampleDefault" 
             aria-controls="navbarsExampleDefault" 
- 
             aria-label="Toggle navigation"
         >
             <span class="navbar-toggler-icon"></span>
@@ -28,8 +27,9 @@
                       {{ user.displayName }}
                     </a>
                     <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
-                      <a ngbDropdownItem href="#">Список замовлень</a>
-                      <a ngbDropdownItem href="#">Список товарів</a>
+                      <a ngbDropdownItem routerLink="/my-orders">Мої замовлення</a>  
+                      <a ngbDropdownItem routerLink="/admin/orders">Всі замовлення</a>
+                      <a ngbDropdownItem routerLink="/admin/products">Список товарів</a>
                       <a ngbDropdownItem (click)="logout()">Вихід</a>
                     </div>
                   </li>
