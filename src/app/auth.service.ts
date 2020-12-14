@@ -1,7 +1,8 @@
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Injectable, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import firebase from 'firebase';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,15 +10,20 @@ import firebase from 'firebase';
 export class AuthService {
   user$: Observable<firebase.User>;
 
-  constructor(private afAuth: AngularFireAuth) { 
+  constructor(private afAuth: AngularFireAuth,
+              private route: ActivatedRoute) { 
     this.user$ = afAuth.authState;
   }
   
   login() {
+    var returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+    localStorage.setItem('returnUrl', returnUrl);
+    
     this.afAuth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
   }
 
   logout() {
     this.afAuth.signOut();
   }
+
 }
