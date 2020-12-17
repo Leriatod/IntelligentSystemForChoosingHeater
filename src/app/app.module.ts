@@ -19,6 +19,7 @@ import { RouterModule } from '@angular/router';
 import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { ProductFormComponent } from './product-form/product-form.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
     AdminProductsComponent,
     AdminOrdersComponent,
     HomeComponent,
-    MyOrdersComponent
+    MyOrdersComponent,
+    ProductFormComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +50,7 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
 
       { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard, AdminAuthGuard] },
       { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+      { path: 'admin/products/new', component: ProductFormComponent, canActivate: [AuthGuard, AdminAuthGuard] },
     ])
   ],
   providers: [
