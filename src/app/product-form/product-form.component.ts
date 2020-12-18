@@ -1,4 +1,7 @@
+import { Router } from '@angular/router';
+import { ProductService } from './../product.service';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'product-form',
@@ -8,12 +11,16 @@ import { Component, OnInit } from '@angular/core';
 export class ProductFormComponent implements OnInit {
   product: any = {};
 
-  constructor() { }
+  constructor(private productService: ProductService,
+              private router: Router,
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
 
   save() {
-    console.log(this.product);
+    this.productService.create(this.product);
+    this.router.navigate(['/admin/products']);
+    this.toastr.success("Товар успішно збережено!", "Оновлення Бази Даних");
   }
 }

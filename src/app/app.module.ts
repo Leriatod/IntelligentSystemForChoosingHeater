@@ -1,9 +1,11 @@
+import { ProductService } from './product.service';
 import { AdminAuthGuard as AdminAuthGuard } from './admin-auth-guard.service';
 import { UserService } from './user.service';
 import { AuthGuard as AuthGuard } from './auth-guard.service';
 import { HomeComponent } from './home/home.component';
 import { AuthService } from './auth.service';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +24,7 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,9 @@ import { CustomFormsModule } from 'ng2-validation';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
+
     FormsModule,
     CustomFormsModule,
 
@@ -45,6 +50,8 @@ import { CustomFormsModule } from 'ng2-validation';
     AngularFireAuthModule,
 
     NgbModule,
+
+    ToastrModule.forRoot(),
 
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
@@ -60,6 +67,7 @@ import { CustomFormsModule } from 'ng2-validation';
   providers: [
     AuthService,
     UserService,
+    ProductService,
     AuthGuard,
     AdminAuthGuard
   ],

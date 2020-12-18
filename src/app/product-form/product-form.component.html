@@ -71,5 +71,15 @@
 
             <button [disabled]="f.invalid" type="submit" class="btn btn-primary">Зберегти</button>
         </div>
+        <div class="col-md-6">
+            <br/>
+            <div class="card" style="width: 23rem;">
+                <img src="{{ product.imageUrl }}" class="card-img-top">
+                <div class="card-body">
+                  <h5 class="card-title">{{ product.title }} </h5>
+                  <p class="card-text">{{ product.price }} ₴</p>
+                </div>
+            </div>
+        </div>
     </div>
 </form>
