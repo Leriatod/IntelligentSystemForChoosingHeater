@@ -2,4 +2,25 @@
     <a class="btn btn-primary" routerLink="/admin/products/new">Новий товар</a>
 </p>
 
-
+<table class="table table-hover">
+    <thead>
+      <tr class="d-flex">
+        <th class="col-3"></th>
+        <th class="col-6">Товар</th>
+        <th class="col-3">Ціна</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of products" class="d-flex">
+          <td class="col-3">
+            <div class="col-md-10">
+                <img class="img-fluid" src="{{ p.imageUrl }}"/>
+            </div>
+          </td>
+          <td class="col-6">
+              <a href="#">{{ p.title }}</a>
+          </td>
+          <td class="col-3">{{ p.price }} грн.</td>
+      </tr>
+    </tbody>
+  </table>
