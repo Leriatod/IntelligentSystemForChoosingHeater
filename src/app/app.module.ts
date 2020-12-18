@@ -20,6 +20,8 @@ import { AdminProductsComponent } from './admin/admin-products/admin-products.co
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { ProductFormComponent } from './product-form/product-form.component';
+import { FormsModule } from '@angular/forms';
+import { CustomFormsModule } from 'ng2-validation';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { ProductFormComponent } from './product-form/product-form.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    
+    FormsModule,
+    CustomFormsModule,
+
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
