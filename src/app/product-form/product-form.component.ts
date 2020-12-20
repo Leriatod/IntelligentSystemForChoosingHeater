@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 export class ProductFormComponent implements OnInit, OnDestroy {
   product: any = {};
   subscription: Subscription = new Subscription();
-  id;
+  id : string;
 
   constructor(private productService: ProductService,
               private router: Router,
@@ -35,6 +35,13 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     }
     this.router.navigate(['/admin/products']);
     this.toastr.success("Товар успішно збережено!", "Оновлення Бази Даних");
+  }
+
+  delete() {
+    if (!confirm(`Ви впевнені, що хочете видалити продукт "${this.product.title}".`)) return;
+    this.productService.delete(this.id);
+    this.router.navigate(['/admin/products']);
+    this.toastr.success("Товар успішно видалено!", "Оновлення Бази Даних");
   }
 
   ngOnDestroy() {
