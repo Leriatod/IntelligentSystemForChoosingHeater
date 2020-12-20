@@ -12,9 +12,17 @@
 <table class="table">
     <thead>
       <tr class="d-flex">
-        <th class="col-3"></th>
-        <th class="col-6">Товар</th>
-        <th class="col-3">Ціна</th>
+        <th class="{{ c.cssClass }}" *ngFor="let c of columns">
+          <div *ngIf="!c.isSortable">{{ c.name }}</div>
+          <div class="clickable" (click)="orderBy(c.key)" *ngIf="c.isSortable; else notSortable">
+            {{ c.name }} 
+            <i *ngIf="filter.orderBy === c.key"
+                class="fa"
+                [class.fa-sort-amount-asc]="filter.orderByAsc"
+                [class.fa-sort-amount-desc]="!filter.orderByAsc">
+            </i>
+          </div>
+        </th>
       </tr>
     </thead>
     <tbody>

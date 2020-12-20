@@ -10,6 +10,9 @@ import * as _ from 'underscore';
 })
 export class AdminProductsComponent implements OnInit, OnDestroy {
   private readonly PAGE_SIZE = 5;
+  private readonly TITLE = 'title';
+  private readonly PRICE = 'price';
+
   private allProducts: any[] = [];
 
   filteredProducts:  any[] = [];
@@ -19,8 +22,16 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   filter = {
     pageSize: this.PAGE_SIZE,
     page: 1,
-    query: ''
+    query: '',
+    orderBy: '',
+    orderByAsc: false,
   }
+
+  columns = [
+    { name: '',      cssClass: "col-3", key: '',      isSortable: false },
+    { name: 'Товар', cssClass: "col-6", key: this.TITLE, isSortable: true  },
+    { name: 'Ціна',  cssClass: "col-3", key: this.PRICE, isSortable: true  },
+  ];
 
   constructor(private productService: ProductService) { }
 
@@ -33,7 +44,17 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
       });
   }
 
+  orderBy(column: string) {
+    if (this.filter.orderBy != column) {
+      this.filter.orderBy    = column;
+      this.filter.orderByAsc = false;
+    }
+    this.filter.orderByAsc = !this.filter.orderByAsc;
+    this.applyFiltering();
+  }
+
   onQueryChange() {
+    this.filter.page = 1;
     this.applyFiltering();
   }
 
@@ -44,6 +65,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   private applyFiltering() {
     this.filteredProducts = this.allProducts;
     this.applySearching();
+    this.applyOrdering();
     this.applyPagining();
   }
 
@@ -54,6 +76,16 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
       var hasString = title.includes(template);
       return hasString;
     });
+  }
+
+  private applyOrdering() {
+    if (this.filter.orderBy === this.TITLE) {
+      this.filteredProducts = _.sortBy(this.filteredProducts, p => p.title);
+    } else if (this.filter.orderBy === this.PRICE) {
+      this.filteredProducts = _.sortBy(this.filteredProducts, p => p.price);
+    }
+    if (!this.filter.orderByAsc) 
+      this.filteredProducts = this.filteredProducts.reverse();
   }
 
   private applyPagining() {
