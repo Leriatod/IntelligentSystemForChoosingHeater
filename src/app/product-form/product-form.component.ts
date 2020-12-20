@@ -1,15 +1,17 @@
-import { Router, ActivatedRoute } from '@angular/router';
-import { ProductService } from './../product.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
+
+import { ProductService } from './../product.service';
 
 @Component({
   selector: 'product-form',
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.scss']
 })
-export class ProductFormComponent implements OnInit, OnDestroy {
+export class ProductFormComponent implements OnInit {
   product: any = {};
   subscription: Subscription = new Subscription();
   id : string;
@@ -23,8 +25,9 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     this.id = this.route.snapshot.paramMap.get('id');
     if (!this.id) return;
     
-    this.subscription = this.productService.get(this.id)
-      .subscribe(p => this.product = p);
+    this.subscription = this.productService.get(this.id).pipe(
+      take(1)
+    ).subscribe(p => this.product = p);
   }
 
   save() {
@@ -42,9 +45,5 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     this.productService.delete(this.id);
     this.router.navigate(['/admin/products']);
     this.toastr.success("Товар успішно видалено!", "Оновлення Бази Даних");
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 }
