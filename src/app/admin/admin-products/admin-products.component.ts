@@ -10,14 +10,16 @@ import * as _ from 'underscore';
 })
 export class AdminProductsComponent implements OnInit, OnDestroy {
   private readonly PAGE_SIZE = 5;
-  
-  allProducts:      any[] = [];
-  filteredProducts: any[] = [];
+  private allProducts: any[] = [];
+
+  filteredProducts:  any[] = [];
+  displayedProducts: any[] = [];
   subscription:   Subscription;
 
-  filter: any = {
+  filter = {
     pageSize: this.PAGE_SIZE,
-    page: 1
+    page: 1,
+    query: ''
   }
 
   constructor(private productService: ProductService) { }
@@ -26,8 +28,13 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
     this.subscription = this.productService.getAll()
       .subscribe(products => {
         this.allProducts = products;
-        this.filteredProducts = _.take(products, this.PAGE_SIZE);
+        this.filteredProducts = products;
+        this.displayedProducts = _.take(products, this.PAGE_SIZE);
       });
+  }
+
+  onQueryChange() {
+    this.applyFiltering();
   }
 
   onPageChange() {
@@ -36,13 +43,23 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
 
   private applyFiltering() {
     this.filteredProducts = this.allProducts;
+    this.applySearching();
     this.applyPagining();
+  }
+
+  private applySearching() {
+    this.filteredProducts = _.filter(this.filteredProducts, p => {
+      var title = p.title.toLowerCase();
+      var template = this.filter.query.toLowerCase();
+      var hasString = title.includes(template);
+      return hasString;
+    });
   }
 
   private applyPagining() {
     var startIndex = (this.filter.page - 1) * this.PAGE_SIZE;
-    this.filteredProducts = _.rest(this.filteredProducts, startIndex);
-    this.filteredProducts = _.take(this.filteredProducts, this.PAGE_SIZE);
+    this.displayedProducts = _.rest(this.filteredProducts, startIndex);
+    this.displayedProducts = _.take(this.displayedProducts, this.PAGE_SIZE);
   }
 
   ngOnDestroy() {

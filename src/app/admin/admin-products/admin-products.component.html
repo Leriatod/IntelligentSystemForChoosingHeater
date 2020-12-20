@@ -1,7 +1,14 @@
 <p>
     <a class="btn btn-primary" routerLink="/admin/products/new">Новий товар</a>
 </p>
-
+<div class="form-group">
+  <input 
+    (keyup)="onQueryChange()"
+    [(ngModel)]="filter.query"
+    type="text" 
+    class="form-control" 
+    placeholder="Введіть назву товару для пошуку ...">
+</div>
 <table class="table">
     <thead>
       <tr class="d-flex">
@@ -11,7 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let p of filteredProducts" class="d-flex">
+      <tr *ngFor="let p of displayedProducts" class="d-flex">
           <td class="col-3">
             <div class="col-md-7">
                 <img class="img-fluid" src="{{ p.imageUrl }}"/>
@@ -24,8 +31,8 @@
       </tr>
     </tbody>
 </table>
-<ngb-pagination 
-  [collectionSize]="allProducts.length" 
+<ngb-pagination *ngIf="filteredProducts.length > filter.pageSize"
+  [collectionSize]="filteredProducts.length" 
   [pageSize]="filter.pageSize" 
   [(page)]="filter.page"
   (pageChange)="onPageChange()">
