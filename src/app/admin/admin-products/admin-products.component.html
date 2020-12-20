@@ -25,7 +25,8 @@
         </th>
       </tr>
     </thead>
-    <tbody>
+    <spinner [isVisible]="!displayedProducts"></spinner>
+    <tbody *ngIf="displayedProducts"> 
       <tr *ngFor="let p of displayedProducts" class="d-flex">
           <td class="col-3">
             <div class="col-md-7">

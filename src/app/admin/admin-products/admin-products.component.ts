@@ -12,11 +12,11 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   private readonly PAGE_SIZE = 5;
   private readonly TITLE = 'title';
   private readonly PRICE = 'price';
-
+  
   private allProducts: any[] = [];
 
   filteredProducts:  any[] = [];
-  displayedProducts: any[] = [];
+  displayedProducts: any[];
   subscription:   Subscription;
 
   filter = {

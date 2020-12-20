@@ -1,3 +1,5 @@
+import { ProductFormComponent } from './admin/product-form/product-form.component';
+
 import { ProductService } from './product.service';
 import { AdminAuthGuard as AdminAuthGuard } from './admin-auth-guard.service';
 import { UserService } from './user.service';
@@ -21,10 +23,10 @@ import { RouterModule } from '@angular/router';
 import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
-import { ProductFormComponent } from './product-form/product-form.component';
 import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import { ToastrModule } from 'ngx-toastr';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -33,9 +35,10 @@ import { ToastrModule } from 'ngx-toastr';
     LoginComponent,
     AdminProductsComponent,
     AdminOrdersComponent,
+    ProductFormComponent,
     HomeComponent,
     MyOrdersComponent,
-    ProductFormComponent
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

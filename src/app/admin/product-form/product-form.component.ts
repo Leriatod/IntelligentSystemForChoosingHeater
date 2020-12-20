@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { ProductService } from 'src/app/product.service';
 
-import { ProductService } from './../product.service';
 
 @Component({
   selector: 'product-form',
