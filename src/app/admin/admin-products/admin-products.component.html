@@ -29,14 +29,22 @@
     <tbody *ngIf="displayedProducts"> 
       <tr *ngFor="let p of displayedProducts" class="d-flex">
           <td class="col-3">
-            <div class="col-md-7">
+            <div class="col-md-10">
                 <img class="img-fluid" src="{{ p.imageUrl }}"/>
             </div>
           </td>
-          <td class="col-6">
-              <a [routerLink]="['/admin/products/',  p.key]">{{ p.title }}</a>
+          <td class="col-5">{{ p.title }}</td>
+          <td class="col-2">{{ p.price }} грн.</td>
+          <td class="col-1" placement="top" ngbTooltip="Змінити">
+            <a [routerLink]="['/admin/products/edit',  p.key]">
+              <i class="fa fa-pencil-square-o fa-2x"></i>
+            </a>
           </td>
-          <td class="col-3">{{ p.price }} грн.</td>
+          <td class="col-1" placement="top" ngbTooltip="Перегляд">
+            <a [routerLink]="['/products/',  p.key]">
+              <i class="fa fa-eye fa-2x"></i>
+            </a>
+          </td>
       </tr>
     </tbody>
 </table>

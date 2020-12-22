@@ -27,6 +27,7 @@ import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import { ToastrModule } from 'ngx-toastr';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { ProductViewComponent } from './product-view/product-view.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
     ProductFormComponent,
     HomeComponent,
     MyOrdersComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ProductViewComponent
   ],
   imports: [
     BrowserModule,
@@ -59,13 +61,14 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'login', component: LoginComponent },
+      { path: 'products/:id', component: ProductViewComponent },
 
       { path: 'my-orders', component: MyOrdersComponent, canActivate: [AuthGuard] },
 
       { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard, AdminAuthGuard] },
       { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
       { path: 'admin/products/new', component: ProductFormComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-      { path: 'admin/products/:id', component: ProductFormComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+      { path: 'admin/products/edit/:id', component: ProductFormComponent, canActivate: [AuthGuard, AdminAuthGuard] },
     ])
   ],
   providers: [

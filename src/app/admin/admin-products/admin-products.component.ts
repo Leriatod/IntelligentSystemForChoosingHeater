@@ -28,9 +28,11 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   }
 
   columns = [
-    { name: '',      cssClass: "col-3", key: '',      isSortable: false },
-    { name: 'Товар', cssClass: "col-6", key: this.TITLE, isSortable: true  },
-    { name: 'Ціна',  cssClass: "col-3", key: this.PRICE, isSortable: true  },
+    { name: '',      cssClass: "col-3", key: '',         isSortable: false },
+    { name: 'Товар', cssClass: "col-5", key: this.TITLE, isSortable: true  },
+    { name: 'Ціна',  cssClass: "col-2", key: this.PRICE, isSortable: true  },
+    { name: '',      cssClass: "col-1", key: '',         isSortable: false },
+    { name: '',      cssClass: "col-1", key: '',         isSortable: false },
   ];
 
   constructor(private productService: ProductService) { }
@@ -79,13 +81,17 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   }
 
   private applyOrdering() {
+    if (!this.filter.orderBy) return;
+
     if (this.filter.orderBy === this.TITLE) {
       this.filteredProducts = _.sortBy(this.filteredProducts, p => p.title);
     } else if (this.filter.orderBy === this.PRICE) {
       this.filteredProducts = _.sortBy(this.filteredProducts, p => p.price);
     }
-    if (!this.filter.orderByAsc) 
-      this.filteredProducts = this.filteredProducts.reverse();
+
+    if (this.filter.orderByAsc) return;
+    
+    this.filteredProducts = this.filteredProducts.reverse();
   }
 
   private applyPagining() {

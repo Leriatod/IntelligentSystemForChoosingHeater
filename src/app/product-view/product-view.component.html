@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <img src="{{ product.imageUrl }}" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.title }}</h5>
+              <p class="card-text">{{ product.price }} грн.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-7">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="activeTabId" class="nav-tabs">
+            <li [ngbNavItem]="1">
+              <a ngbNavLink>Опис товару</a>
+              <ng-template ngbNavContent>
+                <p style="white-space: pre-line">{{ product.description }}</p>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+              <a ngbNavLink>Характеристики</a>
+              <ng-template ngbNavContent>
+                <p>Coming soon.</p>
+              </ng-template>
+            </li>
+        </ul>
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </div>
+</div>
+
+
+
+  
