@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/product.service';
 
 
@@ -12,9 +13,9 @@ import { ProductService } from 'src/app/product.service';
   styleUrls: ['./product-form.component.scss']
 })
 export class ProductFormComponent implements OnInit {
-  product: any = {};
-  subscription: Subscription = new Subscription();
-  id : string;
+  product: Product = { title: '', price: null, imageUrl: '', description: '' };
+  isProductLoading = false;
+  id: string;
 
   constructor(private productService: ProductService,
               private router: Router,
@@ -25,14 +26,17 @@ export class ProductFormComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     if (!this.id) return;
     
-    this.subscription = this.productService.get(this.id).pipe(
+    this.isProductLoading = true;
+    
+    this.productService.get(this.id).pipe(
       take(1)
-    ).subscribe(p => {
-      if (!p) {
+    ).subscribe(product => {
+      if (!product) {
         this.navigateToAdminProducts();
         return;
       } 
-      this.product = p;
+      this.product = product;
+      this.isProductLoading = false;
     });
   }
 

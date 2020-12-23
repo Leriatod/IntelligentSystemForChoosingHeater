@@ -1,8 +1,8 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { ProductService } from 'src/app/product.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Route } from '@angular/compiler/src/core';
-import { Component, OnInit } from '@angular/core';
+import { Product } from '../models/product';
 
 @Component({
   selector: 'app-product-view',
@@ -10,7 +10,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-view.component.scss']
 })
 export class ProductViewComponent implements OnInit {
-  product: any = {};
+  product: Product = { title: '', price: null, imageUrl: '', description: '' };
+  isProductLoading = true;
   activeTabId = 1;
 
   constructor(private route: ActivatedRoute,
@@ -28,6 +29,7 @@ export class ProductViewComponent implements OnInit {
         return;
       }
       this.product = product;
+      this.isProductLoading = false;
     });
   }
 

@@ -1,4 +1,7 @@
-<div class="row">
+<ng-template #productIsLoading>
+    <spinner></spinner>
+</ng-template>
+<div *ngIf="!isProductLoading && id; else productIsLoading" class="row">
     <div class="col-md-6">
         <form #f="ngForm" (ngSubmit)="save()">
             <div class="form-group">
