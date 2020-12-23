@@ -1,6 +1,6 @@
 import { take } from 'rxjs/operators';
 import { ProductService } from 'src/app/product.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
 
@@ -14,7 +14,8 @@ export class ProductViewComponent implements OnInit {
   activeTabId = 1;
 
   constructor(private route: ActivatedRoute,
-              private productService: ProductService) { }
+              private productService: ProductService,
+              private router: Router) { }
 
   ngOnInit() {
     var id = this.route.snapshot.paramMap.get('id');
@@ -22,8 +23,11 @@ export class ProductViewComponent implements OnInit {
     this.productService.get(id).pipe(
       take(1)
     ).subscribe(product => { 
+      if (!product) {
+        this.router.navigate(['/']);
+        return;
+      }
       this.product = product;
-      //this.product.description = this.product.description.replace(/(?:\r\n|\r|\n)/g, '<br>');
     });
   }
 

@@ -27,7 +27,13 @@ export class ProductFormComponent implements OnInit {
     
     this.subscription = this.productService.get(this.id).pipe(
       take(1)
-    ).subscribe(p => this.product = p);
+    ).subscribe(p => {
+      if (!p) {
+        this.navigateToAdminProducts();
+        return;
+      } 
+      this.product = p;
+    });
   }
 
   save() {
@@ -36,14 +42,18 @@ export class ProductFormComponent implements OnInit {
     } else {
       this.productService.create(this.product);
     }
-    this.router.navigate(['/admin/products']);
+    this.navigateToAdminProducts();
     this.toastr.success("Товар успішно збережено!", "Оновлення Бази Даних");
   }
 
   delete() {
     if (!confirm(`Ви впевнені, що хочете видалити продукт "${this.product.title}".`)) return;
     this.productService.delete(this.id);
-    this.router.navigate(['/admin/products']);
+    this.navigateToAdminProducts();
     this.toastr.success("Товар успішно видалено!", "Оновлення Бази Даних");
+  }
+
+  private navigateToAdminProducts() {
+    this.router.navigate(['/admin/products']);
   }
 }
