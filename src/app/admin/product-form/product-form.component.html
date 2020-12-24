@@ -1,7 +1,5 @@
-<ng-template #productIsLoading>
-    <spinner></spinner>
-</ng-template>
-<div *ngIf="!isProductLoading && id; else productIsLoading" class="row">
+<spinner [isVisible]="isProductLoading"></spinner>
+<div *ngIf="!isProductLoading" class="row">
     <div class="col-md-6">
         <form #f="ngForm" (ngSubmit)="save()">
             <div class="form-group">
@@ -77,15 +75,9 @@
         </form>
     </div>
     <div class="col-md-2"></div>
-    <div class="col-md-4">
-        <br/>
-        <div class="card" *ngIf="product.imageUrl">
-            <img src="{{ product.imageUrl }}" class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">{{ product.title }} </h5>
-                <p class="card-text">{{ product.price }} грн.</p>
-            </div>
-        </div>
+    <br/>
+    <div class="col-md-4" *ngIf="product.imageUrl">
+        <product-card [product]="product"></product-card>
     </div>
 </div>
 

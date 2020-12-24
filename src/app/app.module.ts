@@ -28,6 +28,7 @@ import { CustomFormsModule } from 'ng2-validation';
 import { ToastrModule } from 'ngx-toastr';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { ProductViewComponent } from './product-view/product-view.component';
+import { ProductCardComponent } from './product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ProductViewComponent } from './product-view/product-view.component';
     HomeComponent,
     MyOrdersComponent,
     SpinnerComponent,
-    ProductViewComponent
+    ProductViewComponent,
+    ProductCardComponent
   ],
   imports: [
     BrowserModule,
