@@ -1,1 +1,41 @@
-<p>home works!</p>
+<div class="row">
+    <div class="col-md-3">    
+        <div class="sticky-top">
+            <div class="list-group">
+                <a 
+                    (click)="orderByPriceAsc()" 
+                    [class.active]="isOrderedByPriceAsc"
+                    class="list-group-item list-group-item-action">
+                    Від дешевих до дорогих
+                </a>
+                <a 
+                    (click)="orderByPriceDesc()" 
+                    [class.active]="isOrderedByPriceAsc !== null && isOrderedByPriceAsc === false"
+                    class="list-group-item list-group-item-action">Від дорогих до дешевих
+                </a>
+            </div>       
+        </div>
+    </div>
+    <spinner [isVisible]="!products"></spinner>
+    <div *ngIf="products" class="col-md-9">
+        <div class="row">
+            <ng-container *ngFor="let p of products; let i = index">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="image-holder">
+                            <a [routerLink]="['/products', p.key]">
+                                <img class="card-img-top" src="{{ p.imageUrl }}">
+                            </a>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                          <h6 class="card-title">{{ p.title }}</h6>
+                          <p class="card-text">{{ p.price }} грн.</p>
+                          <a [routerLink]="['/products', p.key]" class="btn btn-primary mt-auto">Переглянути</a>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="(i + 1) % 3 === 0" class="w-100"></div>
+            </ng-container>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+.card-text {
+    margin-top: 15px;
+}
+
+.card-title {
+    word-break: break-all; 
+    height: 65px;
+}
+
+.col-md-4 {
+    padding-bottom: 30px;
+}
+
+.image-holder {
+    display: block;
+    position: relative;
+    padding-top: 100%;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.sticky-top {
+    top: 80px;
+}
+
+img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    font-size: 0;
+    cursor: pointer;
+}
+
+img:hover {
+    transform: scale(1.1);
+}
+
+a {
+    cursor: pointer;
+}
