@@ -3,23 +3,33 @@
         <div class="sticky-top">
             <div class="list-group">
                 <a 
-                    (click)="orderByPriceAsc()" 
-                    [class.active]="isOrderedByPriceAsc"
+                    (click)="orderByPriceAsc()"  
+                                
+                    [class.active]="filter.isOrderedByPriceAsc"
                     class="list-group-item list-group-item-action">
                     Від дешевих до дорогих
                 </a>
                 <a 
                     (click)="orderByPriceDesc()" 
-                    [class.active]="isOrderedByPriceAsc !== null && isOrderedByPriceAsc === false"
+                    [class.active]="filter.isOrderedByPriceAsc !== null && filter.isOrderedByPriceAsc === false"
                     class="list-group-item list-group-item-action">Від дорогих до дешевих
                 </a>
-            </div>       
+            </div>  
+            <div class="form-group">
+                <input 
+                    type="text" 
+                    (keyup)="onQueryChange()"
+                    [(ngModel)]="filter.query" 
+                    class="form-control" 
+                    placeholder="Пошук товару за назвою ...">
+            </div>  
+            <button class="btn btn-secondary" style="width: 100%;" type="button" (click)="resetFilters()">Скинути Фільтри</button> 
         </div>
     </div>
     <spinner [isVisible]="!products"></spinner>
-    <div *ngIf="products" class="col-md-9">
+    <div *ngIf="filteredProducts" class="col-md-9">
         <div class="row">
-            <ng-container *ngFor="let p of products; let i = index">
+            <ng-container *ngFor="let p of filteredProducts; let i = index">
                 <div class="col-md-4">
                     <div class="card">
                         <div class="image-holder">

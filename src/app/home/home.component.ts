@@ -11,28 +11,54 @@ import * as _ from 'underscore';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   products: Product[];
+  filteredProducts: Product[];
+
   subscription: Subscription;
-  isOrderedByPriceAsc: boolean = null;
+  filter: any = {
+    isOrderedByPriceAsc: null,
+    query: ''
+  }
 
   constructor(private productService: ProductService) { }
 
   ngOnInit() {
     this.subscription = this.productService.getAll()
-      .subscribe(products => this.products = products);
+      .subscribe(products => this.filteredProducts = this.products = products);
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
+  resetFilters() {
+    this.filter.isOrderedByPriceAsc = null;
+    this.filter.query = '';
+    this.onQueryChange();
+  }
+
+  onQueryChange() {
+    this.filteredProducts = this.products;
+    this.filteredProducts = _.filter(this.filteredProducts, p => { 
+      var title       = p.title.toLowerCase();
+      var template    = this.filter.query.toLowerCase();
+      var hasTemplate = title.includes(template);
+      return hasTemplate;
+    });
+  }
+
   orderByPriceAsc() {
-    this.products = _.sortBy(this.products, p => p.price);
-    this.isOrderedByPriceAsc = true;
+    this.filter.isOrderedByPriceAsc = true;
+    this.applyOrderingByPrice();
   }
 
   orderByPriceDesc() {
-    this.orderByPriceAsc();
-    this.products = this.products.reverse();
-    this.isOrderedByPriceAsc = false;
+    this.filter.isOrderedByPriceAsc = false;
+    this.applyOrderingByPrice();
+  }
+
+  private applyOrderingByPrice() {
+    this.filteredProducts = _.sortBy(this.filteredProducts, p => p.price);
+    if (this.filter.isOrderedByPriceAsc) return;
+    this.filteredProducts = this.filteredProducts.reverse();
   }
 }
