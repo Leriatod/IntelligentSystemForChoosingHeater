@@ -3,8 +3,7 @@
         <div class="sticky-top">
             <div class="list-group">
                 <a 
-                    (click)="orderByPriceAsc()"  
-                                
+                    (click)="orderByPriceAsc()"               
                     [class.active]="filter.isOrderedByPriceAsc"
                     class="list-group-item list-group-item-action">
                     Від дешевих до дорогих
@@ -22,8 +21,11 @@
                     [(ngModel)]="filter.query" 
                     class="form-control" 
                     placeholder="Пошук товару за назвою ...">
-            </div>  
-            <button class="btn btn-secondary" style="width: 100%;" type="button" (click)="resetFilters()">Скинути Фільтри</button> 
+            </div> 
+            <p>
+                <button class="btn btn-secondary" type="button" (click)="resetFilters()">Скинути Фільтри</button> 
+            </p> 
+            
         </div>
     </div>
     <spinner [isVisible]="!products"></spinner>

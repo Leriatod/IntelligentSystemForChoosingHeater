@@ -1,3 +1,4 @@
+import { FeatureTypeService } from './feature-type.service';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 
 import { ProductService } from './product.service';
@@ -77,6 +78,7 @@ import { ProductCardComponent } from './product-card/product-card.component';
     AuthService,
     UserService,
     ProductService,
+    FeatureTypeService,
     AuthGuard,
     AdminAuthGuard
   ],

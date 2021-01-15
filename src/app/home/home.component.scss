@@ -6,6 +6,15 @@
     padding-bottom: 30px;
 }
 
+.btn-secondary {
+    width: 100%;
+}
+
+.sticky-top {
+    top: 80px;
+    padding-bottom: 50px;
+}
+
 .image-holder {
     display: block;
     position: relative;
@@ -14,10 +23,6 @@
     background-color: #fff;
 }
 
-.sticky-top {
-    top: 80px;
-    padding-bottom: 50px;
-}
 
 img {
     position: absolute;
