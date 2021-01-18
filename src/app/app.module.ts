@@ -30,6 +30,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { ProductViewComponent } from './product-view/product-view.component';
 import { ProductCardComponent } from './product-card/product-card.component';
+import { RecommendProductComponent } from './recommend-product/recommend-product.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ProductCardComponent } from './product-card/product-card.component';
     MyOrdersComponent,
     SpinnerComponent,
     ProductViewComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    RecommendProductComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +67,7 @@ import { ProductCardComponent } from './product-card/product-card.component';
       { path: '', component: HomeComponent },
       { path: 'login', component: LoginComponent },
       { path: 'products/:id', component: ProductViewComponent },
+      { path: 'recommend-product', component: RecommendProductComponent },
 
       { path: 'my-orders', component: MyOrdersComponent, canActivate: [AuthGuard] },
 
