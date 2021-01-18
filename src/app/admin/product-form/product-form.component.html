@@ -74,6 +74,8 @@
                                 id="description" 
                                 rows="10"></textarea>
                         </div>
+                        <button [disabled]="f.invalid" type="submit" class="btn btn-primary">Зберегти</button>
+                        <button *ngIf="id" type="button" class="btn btn-danger" (click)="delete()">Видалити</button>
                   </ng-template>
                 </li>
                 <li [ngbNavItem]="2">
@@ -81,18 +83,31 @@
                   <ng-template ngbNavContent>
                         <div *ngIf="featureTypes">
                             <div *ngFor="let ft of featureTypes" class="form-group">
-                                <label>{{ ft.name }}</label>
+                                <label for="{{ ft.key }}">{{ ft.name }}</label>
                                 <ng-template #canSelectOneFeature>
-                                    <select class="custom-select">
-                                        <option value="0"></option>
-                                        <option *ngFor="let f of ft.features" value="{{ f.key }}">{{ f.name }}</option>
-                                    </select>
+                                    <div *ngFor="let f of ft.features | keyvalue" class="custom-control custom-radio">
+                                        <input 
+                                            type="radio" 
+                                            id="{{ f.key }}"
+                                            [checked]="product.features[f.key]"
+                                            (click)="onRadioButtonClick(ft.key, f)"
+                                            name="{{ ft.key }}" 
+                                            class="custom-control-input">
+                                        <label class="custom-control-label" for="{{ f.key }}">{{ f.value.name }}</label>
+                                    </div>
                                 </ng-template>
                 
                                 <div *ngIf="ft.canSelectManyFeatures; else canSelectOneFeature">
-                                    <div *ngFor="let f of ft.features" class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="{{ f.key }}">
-                                        <label class="custom-control-label" for="{{ f.key }}">{{ f.name }}</label>
+                                    <div *ngFor="let f of ft.features | keyvalue" class="custom-control custom-switch">
+                                        <input 
+                                            type="checkbox" 
+                                            class="custom-control-input" 
+                                            id="{{ f.key }}"
+                                            (change)="onCheckBoxChange(f)"
+                                            [checked]="product.features[f.key]">
+                                        <label class="custom-control-label" for="{{ f.key }}">
+                                            {{ f.value.name }}
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -101,9 +116,6 @@
                 </li>
             </ul>
             <div [ngbNavOutlet]="nav" class="mt-2"></div>
-
-            <button [disabled]="f.invalid" type="submit" class="btn btn-primary">Зберегти</button>
-            <button *ngIf="id" type="button" class="btn btn-danger" (click)="delete()">Видалити</button>
         </form>
     </div>
     <div class="col-md-2"></div>

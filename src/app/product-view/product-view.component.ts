@@ -10,7 +10,7 @@ import { Product } from '../models/product';
   styleUrls: ['./product-view.component.scss']
 })
 export class ProductViewComponent implements OnInit {
-  product: Product = { title: '', price: null, imageUrl: '', description: '' };
+  product: Product = new Product();
   isProductLoading = true;
   activeTabId = 1;
 

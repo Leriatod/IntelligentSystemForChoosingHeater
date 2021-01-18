@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { FeatureType } from 'src/app/models/feature-type';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/product.service';
 
@@ -15,11 +14,10 @@ import { FeatureTypeService } from './../../feature-type.service';
   styleUrls: ['./product-form.component.scss']
 })
 export class ProductFormComponent implements OnInit, OnDestroy {
-  featureTypes: FeatureType[];
-  product: Product = { title: '', price: null, imageUrl: '', description: '' };
+  product: Product = new Product();
   isProductLoading = false;
   id: string;
-
+  featureTypes: any;
   subscriptions: Subscription[] = [];
 
   constructor(private productService: ProductService,
@@ -29,25 +27,32 @@ export class ProductFormComponent implements OnInit, OnDestroy {
               private toastr: ToastrService) { }
 
   ngOnInit() {
-    var featureTypesSubscription = this.featureTypeService.getAllFeatureTypes()
-      .subscribe(featureTypes => this.featureTypes = featureTypes);
+    this.loadFeatureTypes();
+    this.loadProductById();
+  }
 
+  private loadFeatureTypes() {
+    var subscription = this.featureTypeService.getAllFeatureTypes()
+      .subscribe(featureTypes => this.featureTypes = featureTypes);
+    this.subscriptions.push(subscription);
+  }
+
+  private loadProductById() {
     this.id = this.route.snapshot.paramMap.get('id');
     if (!this.id) return;
     
     this.isProductLoading = true;
     
-    var productSubscription = this.productService.get(this.id).subscribe(product => {
+    var subscription = this.productService.get(this.id).subscribe(product => {
       if (!product) {
         this.navigateToAdminProducts();
         return;
       } 
       this.product = product;
+      if (!this.product.features) this.product.features = {};
       this.isProductLoading = false;
     });
-
-    this.subscriptions.push(featureTypesSubscription);
-    this.subscriptions.push(productSubscription);
+    this.subscriptions.push(subscription);
   }
 
   save() {
@@ -69,6 +74,29 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
   private navigateToAdminProducts() {
     this.router.navigate(['/admin/products']);
+  }
+
+  onCheckBoxChange(feature) {
+    if ( this.removeFeatureIfClickAgain(feature) ) return;
+    this.product.features[feature.key] = feature.value;
+  }
+
+  onRadioButtonClick(featureTypeKey, feature) {
+    if ( this.removeFeatureIfClickAgain(feature) ) return;
+    var radioButtons = document.getElementsByName(featureTypeKey);
+    radioButtons.forEach((radio: any) => {
+      if (radio.checked) {
+        this.product.features[radio.id] = feature.value; 
+      } else {
+        delete this.product.features[radio.id];
+      }
+    });
+  }
+
+  private removeFeatureIfClickAgain(feature): boolean {
+    var featureIsSelected = this.product.features.hasOwnProperty(feature.key);
+    if (featureIsSelected) delete this.product.features[feature.key];
+    return featureIsSelected;
   }
 
   ngOnDestroy() {
