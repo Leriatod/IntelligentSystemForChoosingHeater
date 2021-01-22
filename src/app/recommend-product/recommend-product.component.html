@@ -1,65 +1,94 @@
-<div class="row">
-    <div class="col-md-6">
-        <spinner [isVisible]="!featureTypes"></spinner>
-        <div *ngIf="featureTypes">
-            <div *ngFor="let ft of featureTypes; index as i" class="form-group">
-                <h6>{{ ft.question }}</h6>
-                <ng-template #canSelectOneFeature>
-                    <div *ngFor="let f of ft.features | keyvalue" class="custom-control custom-radio">
-                        <input 
-                            type="radio" 
-                            id="{{ f.key }}"
-                            name="{{ ft.key }}" 
-                            [value]="true"
-                            (change)="onRadioButtonClick(ft.key)"
-                            class="custom-control-input">
-                        <label class="custom-control-label" for="{{ f.key }}">{{ f.value.answer }}</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input 
-                            type="radio" 
-                            id="{{ i }}"
-                            name="{{ ft.key }}"
-                            [value]="null" 
-                            (change)="onRadioButtonClick(ft.key)"
-                            class="custom-control-input" 
-                            checked="">
-                        <label class="custom-control-label" for="{{ i }}">Не важливо</label>
-                    </div>
-                </ng-template>
-                
-                <div *ngIf="ft.canSelectManyFeatures; else canSelectOneFeature">
-                    <div *ngFor="let f of ft.features | keyvalue" class="custom-control custom-switch">
-                        <input 
-                            type="checkbox" 
-                            class="custom-control-input"
-                            [value]="true"
-                            (change)="onCheckBoxClick(f.key)"
-                            id="{{ f.key }}">
-                        <label class="custom-control-label" for="{{ f.key }}">{{ f.value.answer }}</label>
-                    </div>
+<div *ngIf="pageNumber === 1">
+    <h1 class="text-center">
+        Крок 1 - Діалог
+        <a *ngIf="checkIfAnyFeatureSelected()" class="text-right clickable" (click)="pageNumber = 2; sortProductsByMatchingFeaturesDesc();"><i class="fa fa-arrow-circle-o-right"></i></a>
+    </h1>
+
+    <spinner [isVisible]="!featureTypes"></spinner>
+    <div *ngIf="featureTypes">
+        <div *ngFor="let ft of featureTypes; index as i" class="form-group">
+            <h6 style="padding-top: 15px;">{{ i + 1 }}. {{ ft.question }}</h6>
+            <ng-template #canSelectOneFeature>
+                <div *ngFor="let f of ft.features | keyvalue" class="custom-control custom-radio">
+                    <input 
+                        type="radio" 
+                        id="{{ f.key }}"
+                        name="{{ ft.key }}" 
+                        [value]="true"
+                        (change)="onRadioButtonClick(ft.key, f)"
+                        class="custom-control-input"
+                        [checked]="features[f.key]">
+                    <label class="custom-control-label" for="{{ f.key }}">{{ f.value.answer }}</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input 
+                        type="radio" 
+                        id="{{ i }}"
+                        name="{{ ft.key }}"
+                        [value]="null" 
+                        (change)="onRadioButtonClick(ft.key)"
+                        class="custom-control-input" 
+                        checked="">
+                    <label class="custom-control-label" for="{{ i }}">Не важливо</label>
+                </div>
+            </ng-template>
+            
+            <div *ngIf="ft.canSelectManyFeatures; else canSelectOneFeature">
+                <div *ngFor="let f of ft.features | keyvalue" class="custom-control custom-switch">
+                    <input 
+                        type="checkbox" 
+                        class="custom-control-input"
+                        (change)="onCheckBoxClick(f)"
+                        id="{{ f.key }}"
+                        [value]="true"
+                        [checked]="features[f.key]">
+                    <label class="custom-control-label" for="{{ f.key }}">{{ f.value.answer }}</label>
                 </div>
             </div>
-            <div style="padding-top: 15px; padding-bottom: 30px;">
-                <button (click)="sortProductsByMatchingFeaturesDesc()" class="btn btn-primary">Надати рекомендації</button>
-            </div>         
-        </div>
+        </div>        
     </div>
-    <div class="col-md-6">
-        <spinner [isVisible]="!query"></spinner>
-        <div *ngIf="query">
-            <div *ngFor="let item of query" class="media">
-                <a [routerLink]="['/products', item.product.key]">
-                    <img class="mr-3" src="{{ item.product.imageUrl }}">
-                </a>     
-                <div class="media-body">
-                  <p>
-                    <a [routerLink]="['/products', item.product.key]">{{ item.product.title }}</a>
-                  </p>
-                  {{ item.product.price }} грн.
+</div>
+
+<div *ngIf="pageNumber === 2">
+    <h1 style="padding-bottom: 15px;" class="text-center">
+        <a class="text-right clickable" (click)="pageNumber = 1"><i class="fa fa-arrow-circle-o-left"></i></a>
+        Крок 2 - Рекомендовані товари
+    </h1>
+    <spinner [isVisible]="!query"></spinner>
+    <div *ngIf="query">
+        <div *ngFor="let item of query; index as i">
+            <div *ngIf="i < 5" class="card mb-3">
+                <div class="row no-gutters">
+                    <div class="col-md-3 content">
+                        <a [routerLink]="['/products', item.product.key]">
+                            <img class="card-img" src="{{ item.product.imageUrl }}">
+                        </a>
+                    </div>
+                    
+                    <div class="col-md-9">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.product.title }}</h5>
+                            <p class="card-text">{{ item.product.price }} грн.</p>
+                            <div *ngFor="let f of features | keyvalue">
+                                <div class="text-success" *ngIf="item.product.features[f.key]">
+                                    {{ f.value.name }}
+                                    <i class="fa fa-check"></i>
+                                </div>
+                                <div class="text-danger" *ngIf="!item.product.features[f.key]">
+                                    {{ f.value.name }}
+                                    <i class="fa fa-times"></i>
+                                </div>
+                            </div> 
+                            <div style="padding-top: 15px;">
+                                <a style="width: 150px; " [routerLink]="['/products', item.product.key]" class="btn btn-primary">
+                                    Переглянути
+                                </a> 
+                            </div>
+                            
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        
+            </div>         
+        </div>           
     </div>
 </div>

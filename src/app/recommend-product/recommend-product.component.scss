@@ -1,15 +1,22 @@
-img {
-    height: 125px;
-}
-
 .media-body {
     text-align: right;
 }
 
+.media {
+    padding-bottom: 30px;
+}
+
 img:hover {
     transform: scale(1.1);
+    cursor: pointer;
 }
 
 .btn.btn-primary {
     width: 100%;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
 }

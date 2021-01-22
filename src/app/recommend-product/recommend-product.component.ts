@@ -11,11 +11,10 @@ import * as _ from 'underscore';
   styleUrls: ['./recommend-product.component.scss']
 })
 export class RecommendProductComponent implements OnInit, OnDestroy {
-  featureTypes: any;
-  allProducts: Product[];
-  features = {};
+  pageNumber = 1;
   query: { product: Product, matchingFeaturesNumber: number }[];
-
+  features = {};
+  featureTypes: any;
   subscriptions: Subscription[] = [];
 
   constructor(private featureTypeService: FeatureTypeService,
@@ -35,44 +34,48 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
   private loadProducts() {
     var subscription = this.productService.getAll()
       .subscribe(products => {
-        this.allProducts = products;
         this.query = [];
         products.forEach(p => this.query.push( { product: p, matchingFeaturesNumber: 0 } ) );
       });
     this.subscriptions.push(subscription);
   }
 
-  sortProductsByMatchingFeaturesDesc() {
-    for (let i = 0; i < this.query.length; i++) {
-      var counter = 0;
-      for (var featureKey in this.features) {
-        var hasFeature = this.query[i].product.features.hasOwnProperty(featureKey);
-        if (hasFeature) counter++;
-      }
-      this.query[i].matchingFeaturesNumber = counter;
-    } 
-    this.query = _.sortBy(this.query, item => -1 * item.matchingFeaturesNumber);
+  onRadioButtonClick(featureTypeId: string, feature) {
+    var radioButtons = document.getElementsByName(featureTypeId);
 
-    console.log(this.query);
-  }
-
-  onRadioButtonClick(featureTypeKey) {
-    var radioButtons = document.getElementsByName(featureTypeKey);
     radioButtons.forEach((radio: any) => {
       if (radio.checked && radio.value) {
-        this.features[radio.id] = radio.value; 
+        this.features[radio.id] = feature.value;
       } else {
         delete this.features[radio.id];
       }
     });
   }
 
-  onCheckBoxClick(featureKey) {
-    if (this.features[featureKey]) {
-      delete this.features[featureKey];
+  onCheckBoxClick(feature) {
+    if (this.features[feature.key]) {
+      delete this.features[feature.key];
     } else {
-      this.features[featureKey] = true;
+      this.features[feature.key] = feature.value;
     }
+  }
+
+  sortProductsByMatchingFeaturesDesc() {
+    this.query.forEach(item => {
+      var product = item.product;
+      var counter = 0;
+
+      for (var featureId in this.features) {
+        var productHasFeature = product.features.hasOwnProperty(featureId);
+        if (productHasFeature) counter++;
+      }
+      item.matchingFeaturesNumber = counter;
+    });
+    this.query = _.sortBy(this.query, item => -1 * item.matchingFeaturesNumber);
+  }
+
+  checkIfAnyFeatureSelected() {
+    return Object.keys(this.features).length > 0;
   }
 
   ngOnDestroy() {
