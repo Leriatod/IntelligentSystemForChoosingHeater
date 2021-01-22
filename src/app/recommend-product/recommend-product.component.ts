@@ -1,3 +1,4 @@
+import { FeatureType } from './../models/feature-type';
 import { Product } from 'src/app/models/product';
 import { ProductService } from './../product.service';
 import { Subscription } from 'rxjs';
@@ -14,7 +15,7 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
   pageNumber = 1;
   query: { product: Product, matchingFeaturesNumber: number }[];
   features = {};
-  featureTypes: any;
+  featureTypes: FeatureType[];
   subscriptions: Subscription[] = [];
 
   constructor(private featureTypeService: FeatureTypeService,

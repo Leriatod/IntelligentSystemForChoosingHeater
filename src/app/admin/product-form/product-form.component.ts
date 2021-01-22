@@ -1,3 +1,4 @@
+import { FeatureType } from './../../models/feature-type';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -17,7 +18,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   product: Product = new Product();
   isProductLoading = false;
   id: string;
-  featureTypes: any;
+  featureTypes: FeatureType[];
   subscriptions: Subscription[] = [];
 
   constructor(private productService: ProductService,
@@ -77,26 +78,23 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   }
 
   onCheckBoxChange(feature) {
-    if ( this.removeFeatureIfClickAgain(feature) ) return;
-    this.product.features[feature.key] = feature.value;
+    if (this.product.features[feature.key]) {
+      delete this.product.features[feature.key];
+    } else {
+      this.product.features[feature.key] = { name: feature.value.name };
+    }
   }
 
-  onRadioButtonClick(featureTypeKey, feature) {
-    if ( this.removeFeatureIfClickAgain(feature) ) return;
+  onRadioButtonClick(featureTypeKey: string, feature) {
     var radioButtons = document.getElementsByName(featureTypeKey);
+
     radioButtons.forEach((radio: any) => {
-      if (radio.checked) {
-        this.product.features[radio.id] = feature.value; 
+      if (radio.checked && radio.value) {
+        this.product.features[radio.id] = { name: feature.value.name };
       } else {
         delete this.product.features[radio.id];
       }
     });
-  }
-
-  private removeFeatureIfClickAgain(feature): boolean {
-    var featureIsSelected = this.product.features.hasOwnProperty(feature.key);
-    if (featureIsSelected) delete this.product.features[feature.key];
-    return featureIsSelected;
   }
 
   ngOnDestroy() {
