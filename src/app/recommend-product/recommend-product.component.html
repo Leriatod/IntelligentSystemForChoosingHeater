@@ -1,7 +1,7 @@
 <div *ngIf="pageNumber === 1">
     <h1 class="text-center">
         Крок 1 - Діалог
-        <a *ngIf="checkIfAnyFeatureSelected()" class="text-right clickable" (click)="pageNumber = 2; sortProductsByMatchingFeaturesDesc();"><i class="fa fa-arrow-circle-o-right"></i></a>
+        <a *ngIf="checkIfAnyFeatureSelected()" class="text-right clickable" (click)="pageNumber = 2;"><i class="fa fa-arrow-circle-o-right"></i></a>
     </h1>
 
     <spinner [isVisible]="!featureTypes"></spinner>
@@ -15,9 +15,9 @@
                         id="{{ f.key }}"
                         name="{{ ft.key }}" 
                         [value]="true"
-                        (change)="onRadioButtonClick(ft.key, f)"
+                        (change)="onRadioButtonFeatureSelect(ft.key, f)"
                         class="custom-control-input"
-                        [checked]="features[f.key]">
+                        [checked]="filter.features[f.key]">
                     <label class="custom-control-label" for="{{ f.key }}">{{ f.value.answer }}</label>
                 </div>
                 <div class="custom-control custom-radio">
@@ -26,7 +26,7 @@
                         id="{{ i }}"
                         name="{{ ft.key }}"
                         [value]="null" 
-                        (change)="onRadioButtonClick(ft.key)"
+                        (change)="onRadioButtonFeatureSelect(ft.key)"
                         class="custom-control-input" 
                         checked="">
                     <label class="custom-control-label" for="{{ i }}">Не важливо</label>
@@ -38,10 +38,10 @@
                     <input 
                         type="checkbox" 
                         class="custom-control-input"
-                        (change)="onCheckBoxClick(f)"
+                        (change)="onCheckBoxFeatureSelect(f)"
                         id="{{ f.key }}"
                         [value]="true"
-                        [checked]="features[f.key]">
+                        [checked]="filter.features[f.key]">
                     <label class="custom-control-label" for="{{ f.key }}">{{ f.value.answer }}</label>
                 </div>
             </div>
@@ -50,45 +50,60 @@
 </div>
 
 <div *ngIf="pageNumber === 2">
-    <h1 style="padding-bottom: 15px;" class="text-center">
-        <a class="text-right clickable" (click)="pageNumber = 1"><i class="fa fa-arrow-circle-o-left"></i></a>
-        Крок 2 - Рекомендовані товари
+    <h1 class="text-center">
+        <a class="text-right clickable" (click)="pageNumber = 1;"><i class="fa fa-arrow-circle-o-left"></i></a>
+        Крок 2 - Розрахунок потужності 
+        <a class="text-right clickable" (click)="pageNumber = 3; setRecommendedProducts();"><i class="fa fa-arrow-circle-o-right"></i></a>
     </h1>
-    <spinner [isVisible]="!query"></spinner>
-    <div *ngIf="query">
-        <div *ngFor="let item of query; index as i">
-            <div *ngIf="i < 5" class="card mb-3">
-                <div class="row no-gutters">
-                    <div class="col-md-3 content">
-                        <a [routerLink]="['/products', item.product.key]">
-                            <img class="card-img" src="{{ item.product.imageUrl }}">
-                        </a>
-                    </div>
-                    
-                    <div class="col-md-9">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ item.product.title }}</h5>
-                            <p class="card-text">{{ item.product.price }} грн.</p>
-                            <div *ngFor="let f of features | keyvalue">
-                                <div class="text-success" *ngIf="item.product.features[f.key]">
-                                    {{ f.value.name }}
-                                    <i class="fa fa-check"></i>
-                                </div>
-                                <div class="text-danger" *ngIf="!item.product.features[f.key]">
-                                    {{ f.value.name }}
-                                    <i class="fa fa-times"></i>
-                                </div>
-                            </div> 
-                            <div style="padding-top: 15px;">
-                                <a style="width: 150px; " [routerLink]="['/products', item.product.key]" class="btn btn-primary">
-                                    Переглянути
-                                </a> 
+    <div class="form-group">
+        <h6 style="padding-top: 15px;">1. Оберіть площу вашої кімнати</h6>
+        <div style="padding-top: 15px;" *ngFor="let r of radioButtonsOptionsForPowerEstimation" class="custom-control custom-radio">
+            <input type="radio" id="{{ r.id }}" name="power" [(ngModel)]="filter.powerRange" [value]="r.value" class="custom-control-input">
+            <label class="custom-control-label" for="{{ r.id }}">{{ r.label }}</label>
+        </div>
+    </div>  
+
+</div>
+
+<div *ngIf="pageNumber === 3">
+    <h1 style="padding-bottom: 15px;" class="text-center">
+        <a class="text-right clickable" (click)="pageNumber = 2;"><i class="fa fa-arrow-circle-o-left"></i></a>
+        Крок 3 - Рекомендовані товари
+    </h1>
+    <div *ngIf="recommendedProducts.length === 0">
+        <h6 style="padding-top: 15px;">На данний момент відсутні товари, які зодовольняють ваш запит.</h6> 
+    </div>
+    <div *ngFor="let p of recommendedProducts; index as i">
+        <div *ngIf="i < 5" class="card mb-3">
+            <div class="row no-gutters">
+                <div class="col-md-3 content">
+                    <a [routerLink]="['/products', p.key]">
+                        <img class="card-img" src="{{ p.imageUrl }}">
+                    </a>
+                </div>
+                
+                <div class="col-md-9">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ p.title }}</h5>
+                        <p class="card-text">{{ p.price }} грн.</p>
+                        <div *ngFor="let f of filter.features | keyvalue">
+                            <div class="text-success" *ngIf="p.features[f.key]">
+                                {{ f.value.name }}
+                                <i class="fa fa-check"></i>
                             </div>
-                            
-                        </div>
+                            <div class="text-danger" *ngIf="!p.features[f.key]">
+                                {{ f.value.name }}
+                                <i class="fa fa-times"></i>
+                            </div>
+                        </div> 
+                        <div style="padding-top: 15px;">
+                            <a style="width: 150px; " [routerLink]="['/products', p.key]" class="btn btn-primary">
+                                Переглянути
+                            </a> 
+                        </div>                  
                     </div>
                 </div>
-            </div>         
-        </div>           
-    </div>
+            </div>
+        </div>         
+    </div>           
 </div>

@@ -43,11 +43,34 @@
                                 </div>
                             </div>
                             <div class="alert alert-danger" *ngIf="price.touched && price.invalid">
-                                <div *ngIf="price.errors.required">Ціна є обов'язковою (в грн.)</div>
+                                <div *ngIf="price.errors.required">Ціна є обов'язковою (в грн.).</div>
                                 <div *ngIf="price.errors.min">Ціна має бути 0 або більше.</div>    
                             </div>
                         </div>
+                        
+                        <div class="form-group">
+                            <label for="power">Потужність</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">кВт</span>
+                                </div>
             
+                                <input 
+                                    #power="ngModel"
+                                    [(ngModel)]="product.power"
+                                    name="power"
+                                    type="number" 
+                                    class="form-control" 
+                                    id="power" 
+                                    required
+                                    [min]="0">
+                            </div>
+                            <div class="alert alert-danger" *ngIf="power.touched && power.invalid">
+                                <div *ngIf="power.errors.required">Потужність є обов'язковою (в кВт).</div>
+                                <div *ngIf="power.errors.min">Потужність має бути 0 або більше.</div>    
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="imageUrl">URL Зображення</label>
                             <input 

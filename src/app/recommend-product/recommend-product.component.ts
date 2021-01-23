@@ -13,10 +13,28 @@ import * as _ from 'underscore';
 })
 export class RecommendProductComponent implements OnInit, OnDestroy {
   pageNumber = 1;
-  query: { product: Product, matchingFeaturesNumber: number }[];
-  features = {};
+
+  query: { product: Product, matchingFeaturesNumber: number }[] = [];
+  recommendedProducts: Product[] = [];
+  filter: any = {
+    powerRange: null,
+    features: {}
+  };
+
   featureTypes: FeatureType[];
   subscriptions: Subscription[] = [];
+
+  radioButtonsOptionsForPowerEstimation = [
+    { id: "square1", label: "5-6 кв. м.",   value: { minPower: 0.5,  maxPower: 0.75 } },
+    { id: "square2", label: "7-9 кв. м.",   value: { minPower: 0.75, maxPower: 1    } },
+    { id: "square3", label: "10-12 кв. м.", value: { minPower: 1,    maxPower: 1.25 } },
+    { id: "square4", label: "12-14 кв. м.", value: { minPower: 1.25, maxPower: 1.5  } },
+    { id: "square5", label: "15-17 кв. м.", value: { minPower: 1.5,  maxPower: 1.75 } },
+    { id: "square6", label: "18-19 кв. м.", value: { minPower: 1.75, maxPower: 2    } },
+    { id: "square7", label: "20-23 кв. м.", value: { minPower: 2,    maxPower: 2.5  } },
+    { id: "square8", label: "24-27 кв. м.", value: { minPower: 2.5,  maxPower: 2.75 } },
+    { id: "square0", label: "Не обирати",   value: null }
+  ];
 
   constructor(private featureTypeService: FeatureTypeService,
               private productService: ProductService) { }
@@ -35,38 +53,42 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
   private loadProducts() {
     var subscription = this.productService.getAll()
       .subscribe(products => {
-        this.query = [];
         products.forEach(p => this.query.push( { product: p, matchingFeaturesNumber: 0 } ) );
       });
     this.subscriptions.push(subscription);
   }
 
-  onRadioButtonClick(featureTypeId: string, feature) {
+  onRadioButtonFeatureSelect(featureTypeId: string, feature) {
     var radioButtons = document.getElementsByName(featureTypeId);
 
     radioButtons.forEach((radio: any) => {
       if (radio.checked && radio.value) {
-        this.features[radio.id] = feature.value;
+        this.filter.features[radio.id] = feature.value;
       } else {
-        delete this.features[radio.id];
+        delete this.filter.features[radio.id];
       }
     });
   }
 
-  onCheckBoxClick(feature) {
-    if (this.features[feature.key]) {
-      delete this.features[feature.key];
+  onCheckBoxFeatureSelect(feature) {
+    if (this.filter.features[feature.key]) {
+      delete this.filter.features[feature.key];
     } else {
-      this.features[feature.key] = feature.value;
+      this.filter.features[feature.key] = feature.value;
     }
   }
 
-  sortProductsByMatchingFeaturesDesc() {
+  setRecommendedProducts() {
+    this.sortProductsByMatchingFeaturesDesc();
+    this.setProductsWithinPowerRange();
+  }
+
+  private sortProductsByMatchingFeaturesDesc() {
     this.query.forEach(item => {
       var product = item.product;
       var counter = 0;
 
-      for (var featureId in this.features) {
+      for (var featureId in this.filter.features) {
         var productHasFeature = product.features.hasOwnProperty(featureId);
         if (productHasFeature) counter++;
       }
@@ -75,8 +97,21 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
     this.query = _.sortBy(this.query, item => -1 * item.matchingFeaturesNumber);
   }
 
+  private setProductsWithinPowerRange() {
+    this.recommendedProducts = _.filter(this.query, item => {
+      if (!this.filter.powerRange) return true;
+
+      var power = item.product.power;
+      var minPower = this.filter.powerRange.minPower;
+      var maxPower = this.filter.powerRange.maxPower;
+      var powerIsWithinRange = power >= minPower && power <= maxPower;
+      return powerIsWithinRange;
+    }).map(item => item.product);
+  }
+
+
   checkIfAnyFeatureSelected() {
-    return Object.keys(this.features).length > 0;
+    return Object.keys(this.filter.features).length > 0;
   }
 
   ngOnDestroy() {
