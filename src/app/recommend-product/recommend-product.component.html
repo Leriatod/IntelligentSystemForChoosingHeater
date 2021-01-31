@@ -1,109 +1,101 @@
-<div *ngIf="pageNumber === 1">
-    <h1 class="text-center">
-        Крок 1 - Діалог
-        <a *ngIf="checkIfAnyFeatureSelected()" class="text-right clickable" (click)="pageNumber = 2;"><i class="fa fa-arrow-circle-o-right"></i></a>
-    </h1>
+<bs-stepper [stepNames]="stepNames" (stepChanged)="onStepChanges($event)"></bs-stepper>
+<br>
+<div class="bs-stepper-content fade-in">
 
-    <spinner [isVisible]="!featureTypes"></spinner>
-    <div *ngIf="featureTypes">
-        <div *ngFor="let ft of featureTypes; index as i" class="form-group">
-            <h6 style="padding-top: 15px;">{{ i + 1 }}. {{ ft.question }}</h6>
-            <ng-template #canSelectOneFeature>
-                <div *ngFor="let f of ft.features | keyvalue" class="custom-control custom-radio">
-                    <input 
-                        type="radio" 
-                        id="{{ f.key }}"
-                        name="{{ ft.key }}" 
-                        [value]="true"
-                        (change)="onRadioButtonFeatureSelect(ft.key, f)"
-                        class="custom-control-input"
-                        [checked]="filter.features[f.key]">
-                    <label class="custom-control-label" for="{{ f.key }}">{{ f.value.answer }}</label>
-                </div>
-                <div class="custom-control custom-radio">
-                    <input 
-                        type="radio" 
-                        id="{{ i }}"
-                        name="{{ ft.key }}"
-                        [value]="null" 
-                        (change)="onRadioButtonFeatureSelect(ft.key)"
-                        class="custom-control-input" 
-                        checked="">
-                    <label class="custom-control-label" for="{{ i }}">Не важливо</label>
-                </div>
-            </ng-template>
-            
-            <div *ngIf="ft.canSelectManyFeatures; else canSelectOneFeature">
-                <div *ngFor="let f of ft.features | keyvalue" class="custom-control custom-switch">
-                    <input 
-                        type="checkbox" 
-                        class="custom-control-input"
-                        (change)="onCheckBoxFeatureSelect(f)"
-                        id="{{ f.key }}"
-                        [value]="true"
-                        [checked]="filter.features[f.key]">
-                    <label class="custom-control-label" for="{{ f.key }}">{{ f.value.answer }}</label>
-                </div>
-            </div>
-        </div>        
-    </div>
-</div>
-
-<div *ngIf="pageNumber === 2">
-    <h1 class="text-center">
-        <a class="text-right clickable" (click)="pageNumber = 1;"><i class="fa fa-arrow-circle-o-left"></i></a>
-        Крок 2 - Розрахунок потужності 
-        <a class="text-right clickable" (click)="pageNumber = 3; setRecommendedProducts();"><i class="fa fa-arrow-circle-o-right"></i></a>
-    </h1>
-    <div class="form-group">
-        <h6 style="padding-top: 15px;">1. Оберіть площу вашої кімнати</h6>
-        <div style="padding-top: 15px;" *ngFor="let r of radioButtonsOptionsForPowerEstimation" class="custom-control custom-radio">
-            <input type="radio" id="{{ r.id }}" name="power" [(ngModel)]="filter.powerRange" [value]="r.value" class="custom-control-input">
-            <label class="custom-control-label" for="{{ r.id }}">{{ r.label }}</label>
-        </div>
-    </div>  
-
-</div>
-
-<div *ngIf="pageNumber === 3">
-    <h1 style="padding-bottom: 15px;" class="text-center">
-        <a class="text-right clickable" (click)="pageNumber = 2;"><i class="fa fa-arrow-circle-o-left"></i></a>
-        Крок 3 - Рекомендовані товари
-    </h1>
-    <div *ngIf="recommendedProducts.length === 0">
-        <h6 style="padding-top: 15px;">На данний момент відсутні товари, які зодовольняють ваш запит.</h6> 
-    </div>
-    <div *ngFor="let p of recommendedProducts; index as i">
-        <div *ngIf="i < 5" class="card mb-3">
-            <div class="row no-gutters">
-                <div class="col-md-3 content">
-                    <a [routerLink]="['/products', p.key]">
-                        <img class="card-img" src="{{ p.imageUrl }}">
-                    </a>
-                </div>
+    <div class="fade-in" *ngIf="currentStep === 0">
+        <spinner [isVisible]="!featureTypes"></spinner>
+        <div *ngIf="featureTypes">
+            <div *ngFor="let ft of featureTypes; index as i" class="form-group">
+                <h6 style="padding-top: 15px;">{{ i + 1 }}. {{ ft.question }}</h6>
+                <ng-template #canSelectOneFeature>
+                    <div *ngFor="let f of ft.features | keyvalue" class="custom-control custom-radio">
+                        <input 
+                            type="radio" 
+                            id="{{ f.key }}"
+                            name="{{ ft.key }}" 
+                            [value]="true"
+                            (change)="onRadioButtonFeatureSelect(ft.key, f)"
+                            class="custom-control-input"
+                            [checked]="filter.features[f.key]">
+                        <label class="custom-control-label" for="{{ f.key }}">{{ f.value.answer }}</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input 
+                            type="radio" 
+                            id="{{ i }}"
+                            name="{{ ft.key }}"
+                            [value]="null" 
+                            (change)="onRadioButtonFeatureSelect(ft.key)"
+                            class="custom-control-input" 
+                            checked="">
+                        <label class="custom-control-label" for="{{ i }}">Не важливо</label>
+                    </div>
+                </ng-template>
                 
-                <div class="col-md-9">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ p.title }}</h5>
-                        <p class="card-text">{{ p.price }} грн.</p>
-                        <div *ngFor="let f of filter.features | keyvalue">
-                            <div class="text-success" *ngIf="p.features[f.key]">
-                                {{ f.value.name }}
-                                <i class="fa fa-check"></i>
-                            </div>
-                            <div class="text-danger" *ngIf="!p.features[f.key]">
-                                {{ f.value.name }}
-                                <i class="fa fa-times"></i>
-                            </div>
-                        </div> 
-                        <div style="padding-top: 15px;">
-                            <a style="width: 150px; " [routerLink]="['/products', p.key]" class="btn btn-primary">
-                                Переглянути
-                            </a> 
-                        </div>                  
+                <div *ngIf="ft.canSelectManyFeatures; else canSelectOneFeature">
+                    <div *ngFor="let f of ft.features | keyvalue" class="custom-control custom-switch">
+                        <input 
+                            type="checkbox" 
+                            class="custom-control-input"
+                            (change)="onCheckBoxFeatureSelect(f)"
+                            id="{{ f.key }}"
+                            [value]="true"
+                            [checked]="filter.features[f.key]">
+                        <label class="custom-control-label" for="{{ f.key }}">{{ f.value.answer }}</label>
                     </div>
                 </div>
+            </div>        
+        </div>
+    </div>
+
+    <div class="fade-in" *ngIf="currentStep === 1">
+        <div class="form-group">
+            <h6 style="padding-top: 15px;">1. Оберіть площу вашої кімнати</h6>
+            <div style="padding-top: 15px;" *ngFor="let r of radioButtonsOptionsForPowerEstimation" class="custom-control custom-radio">
+                <input type="radio" id="{{ r.id }}" name="power" [(ngModel)]="filter.powerRange" [value]="r.value" class="custom-control-input">
+                <label class="custom-control-label" for="{{ r.id }}">{{ r.label }}</label>
             </div>
-        </div>         
-    </div>           
+        </div>  
+    </div>
+
+    <div class="fade-in" *ngIf="currentStep === 2"> 
+        <div *ngIf="recommendedProducts.length === 0">
+            <h6 style="padding-top: 15px;">На данний момент відсутні товари, які зодовольняють ваш запит.</h6> 
+        </div>
+        <div *ngFor="let p of recommendedProducts; index as i">
+            <div *ngIf="i < 7" class="card mb-3">
+                <div class="row no-gutters">
+                    <div class="col-md-3 content">
+                        <a [routerLink]="['/products', p.key]">
+                            <img class="card-img" src="{{ p.imageUrl }}">
+                        </a>
+                    </div>
+                    
+                    <div class="col-md-9">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ p.title }}</h5>
+                            <p class="card-text">{{ p.price }} грн.</p>
+                            <div *ngFor="let f of filter.features | keyvalue">
+                                <div class="text-success" *ngIf="p.features[f.key]">
+                                    {{ f.value.name }}
+                                    <i class="fa fa-check"></i>
+                                </div>
+                                <div class="text-danger" *ngIf="!p.features[f.key]">
+                                    {{ f.value.name }}
+                                    <i class="fa fa-times"></i>
+                                </div>
+                            </div> 
+                            <div style="padding-top: 15px;">
+                                <a style="width: 150px; " [routerLink]="['/products', p.key]" class="btn btn-primary">
+                                    Переглянути
+                                </a> 
+                            </div>                  
+                        </div>
+                    </div>
+                </div>
+            </div>         
+        </div>
+    </div>
+    
 </div>
+

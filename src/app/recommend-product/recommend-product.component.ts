@@ -6,13 +6,15 @@ import { FeatureTypeService } from './../feature-type.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as _ from 'underscore';
 
+
 @Component({
   selector: 'app-recommend-product',
   templateUrl: './recommend-product.component.html',
   styleUrls: ['./recommend-product.component.scss']
 })
 export class RecommendProductComponent implements OnInit, OnDestroy {
-  pageNumber = 1;
+  currentStep = 0;
+  stepNames = ["Діалог", "Розрахунок Потужності", "Рекомендовані Товари"];
 
   query: { product: Product, matchingFeaturesNumber: number }[] = [];
   recommendedProducts: Product[] = [];
@@ -78,7 +80,11 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
     }
   }
 
-  setRecommendedProducts() {
+
+  onStepChanges(stepNumber) { 
+    this.currentStep = stepNumber; 
+    if (this.currentStep < 2) return;  
+
     this.sortProductsByMatchingFeaturesDesc();
     this.setProductsWithinPowerRange();
   }
@@ -107,11 +113,6 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
       var powerIsWithinRange = power >= minPower && power <= maxPower;
       return powerIsWithinRange;
     }).map(item => item.product);
-  }
-
-
-  checkIfAnyFeatureSelected() {
-    return Object.keys(this.filter.features).length > 0;
   }
 
   ngOnDestroy() {

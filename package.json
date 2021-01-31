@@ -23,6 +23,7 @@
     "@angular/router": "~10.0.3",
     "@ng-bootstrap/ng-bootstrap": "^8.0.0",
     "bootstrap": "^4.5.3",
+    "bs-stepper": "^1.7.0",
     "firebase": "^7.24.0",
     "font-awesome": "^4.7.0",
     "ng2-validation": "^4.2.0",
