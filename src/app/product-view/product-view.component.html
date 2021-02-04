@@ -3,7 +3,9 @@
 </ng-template>
 <div *ngIf="!isProductLoading; else productIsLoading" class="row">
     <div class="col-md-4">
-        <product-card [product]="product"></product-card>     
+        <div class="card-container">
+          <product-card [product]="product"></product-card>   
+        </div>
     </div>
     <div class="col-md-1"></div>
     <div class="col-md-7">
@@ -11,13 +13,20 @@
             <li [ngbNavItem]="1">
               <a ngbNavLink>Опис товару</a>
               <ng-template ngbNavContent>
-                <p style="white-space: pre-line">{{ product.description }}</p>
+                <p class="pre-line-text">
+                  {{ product.description }}
+                </p>
               </ng-template>
             </li>
             <li [ngbNavItem]="2">
-              <a ngbNavLink>Характеристики</a>
+              <a ngbNavLink>Властивості</a>
               <ng-template ngbNavContent>
-                <p>Coming soon.</p>
+                <ul class="list-group list-group-flush">
+                  <li *ngFor="let f of product.features | keyvalue" class="list-group-item d-flex justify-content-between align-items-center ">
+                    {{ f.value.name }}
+                    <i class="fa fa-check text-success"></i>
+                  </li>
+                </ul>
               </ng-template>
             </li>
         </ul>

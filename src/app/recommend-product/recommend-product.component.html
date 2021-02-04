@@ -1,6 +1,6 @@
 <bs-stepper [stepNames]="stepNames" (stepChanged)="onStepChanges($event)"></bs-stepper>
 <br>
-<div class="bs-stepper-content fade-in">
+<div class="bs-stepper-content">
 
     <div class="fade-in" *ngIf="currentStep === 0">
         <spinner [isVisible]="!featureTypes"></spinner>
