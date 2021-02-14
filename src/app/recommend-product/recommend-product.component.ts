@@ -16,24 +16,13 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
 
   query: { product: Product, matchingFeaturesNumber: number }[] = [];
   recommendedProducts: Product[] = [];
+
   filter: any = {
     powerRange: null,
     features: {}
   };
 
   subscription: Subscription;
-
-  radioButtonsOptionsForPowerEstimation = [
-    { id: "square1", label: "5-6 кв. м.",   value: { minPower: 0.5,  maxPower: 0.75 } },
-    { id: "square2", label: "7-9 кв. м.",   value: { minPower: 0.75, maxPower: 1    } },
-    { id: "square3", label: "10-12 кв. м.", value: { minPower: 1,    maxPower: 1.25 } },
-    { id: "square4", label: "12-14 кв. м.", value: { minPower: 1.25, maxPower: 1.5  } },
-    { id: "square5", label: "15-17 кв. м.", value: { minPower: 1.5,  maxPower: 1.75 } },
-    { id: "square6", label: "18-19 кв. м.", value: { minPower: 1.75, maxPower: 2    } },
-    { id: "square7", label: "20-23 кв. м.", value: { minPower: 2,    maxPower: 2.5  } },
-    { id: "square8", label: "24-27 кв. м.", value: { minPower: 2.5,  maxPower: 2.75 } },
-    { id: "square0", label: "Не обирати",   value: null }
-  ];
 
   constructor(private productService: ProductService) { }
 
@@ -56,7 +45,9 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
     this.filter.features = selectedFeatures;
   }
 
-
+  onPowerRangeChanged(powerRange) {
+    this.filter.powerRange = powerRange;
+  }
 
   private sortProductsByMatchingFeaturesDesc() {
     this.query.forEach(item => {

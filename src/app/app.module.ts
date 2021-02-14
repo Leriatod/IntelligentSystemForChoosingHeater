@@ -33,6 +33,7 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { RecommendProductComponent } from './recommend-product/recommend-product.component';
 import { BsStepperComponent } from './shared/bs-stepper/bs-stepper.component';
 import { DialogComponent } from './recommend-product/dialog/dialog.component';
+import { PowerEstimationComponent } from './recommend-product/power-estimation/power-estimation.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { DialogComponent } from './recommend-product/dialog/dialog.component';
     ProductCardComponent,
     RecommendProductComponent,
     BsStepperComponent,
-    DialogComponent
+    DialogComponent,
+    PowerEstimationComponent
   ],
   imports: [
     BrowserModule,
