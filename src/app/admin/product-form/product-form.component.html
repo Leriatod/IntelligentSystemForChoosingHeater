@@ -155,7 +155,9 @@
     <div class="col-md-2"></div>
     <br/>
     <div class="col-md-4" *ngIf="product.imageUrl">
-        <product-card [product]="product"></product-card>
+        <div class="sticky-top">
+            <product-card [product]="product"></product-card>
+        </div>
     </div>
 </div>
 

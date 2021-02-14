@@ -1,3 +1,7 @@
+.sticky-top {
+    padding-bottom: 20px;
+}
+
 .col-md-4 {
     padding-bottom: 30px;
 }
@@ -8,12 +12,6 @@
 
 .btn-secondary, .btn-info {
     width: 100%;
-}
-
-
-.sticky-top {
-    top: 80px;
-    padding-bottom: 50px;
 }
 
 .image-holder {
@@ -56,10 +54,4 @@ img {
   
 .container {
     padding: 2px 16px;
-}
-
-
-
-a {
-    cursor: pointer;
 }

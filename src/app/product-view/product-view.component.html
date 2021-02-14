@@ -3,9 +3,9 @@
 </ng-template>
 <div *ngIf="!isProductLoading; else productIsLoading" class="row">
     <div class="col-md-4">
-        <div class="card-container">
-          <product-card [product]="product"></product-card>   
-        </div>
+      <div class="sticky-top">
+        <product-card [product]="product"></product-card>  
+      </div>
     </div>
     <div class="col-md-1"></div>
     <div class="col-md-7">
