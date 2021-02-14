@@ -32,6 +32,7 @@ import { ProductViewComponent } from './product-view/product-view.component';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { RecommendProductComponent } from './recommend-product/recommend-product.component';
 import { BsStepperComponent } from './shared/bs-stepper/bs-stepper.component';
+import { DialogComponent } from './recommend-product/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { BsStepperComponent } from './shared/bs-stepper/bs-stepper.component';
     ProductViewComponent,
     ProductCardComponent,
     RecommendProductComponent,
-    BsStepperComponent
+    BsStepperComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,

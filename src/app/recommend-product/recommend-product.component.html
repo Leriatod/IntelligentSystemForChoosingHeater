@@ -1,51 +1,12 @@
-<bs-stepper [stepNames]="stepNames" (stepChanged)="onStepChanges($event)"></bs-stepper>
+<bs-stepper [stepNames]="stepNames" (stepChanged)="onStepChanged($event)"></bs-stepper>
 <br>
 <div class="bs-stepper-content">
 
     <div class="fade-in" *ngIf="currentStep === 0">
-        <spinner [isVisible]="!featureTypes"></spinner>
-        <div *ngIf="featureTypes">
-            <div *ngFor="let ft of featureTypes; index as i" class="form-group">
-                <h6 style="padding-top: 15px;">{{ i + 1 }}. {{ ft.question }}</h6>
-                <ng-template #canSelectOneFeature>
-                    <div *ngFor="let f of ft.features | keyvalue" class="custom-control custom-radio">
-                        <input 
-                            type="radio" 
-                            id="{{ f.key }}"
-                            name="{{ ft.key }}" 
-                            [value]="true"
-                            (change)="onRadioButtonFeatureSelect(ft.key, f)"
-                            class="custom-control-input"
-                            [checked]="filter.features[f.key]">
-                        <label class="custom-control-label" for="{{ f.key }}">{{ f.value.answer }}</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input 
-                            type="radio" 
-                            id="{{ i }}"
-                            name="{{ ft.key }}"
-                            [value]="null" 
-                            (change)="onRadioButtonFeatureSelect(ft.key)"
-                            class="custom-control-input" 
-                            checked="">
-                        <label class="custom-control-label" for="{{ i }}">Не важливо</label>
-                    </div>
-                </ng-template>
-                
-                <div *ngIf="ft.canSelectManyFeatures; else canSelectOneFeature">
-                    <div *ngFor="let f of ft.features | keyvalue" class="custom-control custom-switch">
-                        <input 
-                            type="checkbox" 
-                            class="custom-control-input"
-                            (change)="onCheckBoxFeatureSelect(f)"
-                            id="{{ f.key }}"
-                            [value]="true"
-                            [checked]="filter.features[f.key]">
-                        <label class="custom-control-label" for="{{ f.key }}">{{ f.value.answer }}</label>
-                    </div>
-                </div>
-            </div>        
-        </div>
+        <user-dialog 
+            [selectedFeatures]="filter.features" 
+            (featureChanged)="onFeatureChanged($event)">
+        </user-dialog>
     </div>
 
     <div class="fade-in" *ngIf="currentStep === 1">

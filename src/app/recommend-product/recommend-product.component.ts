@@ -1,10 +1,8 @@
-import { FeatureType } from './../models/feature-type';
-import { Product } from 'src/app/models/product';
-import { ProductService } from './../product.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { FeatureTypeService } from './../feature-type.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Product } from 'src/app/models/product';
 import * as _ from 'underscore';
+import { ProductService } from './../product.service';
 
 
 @Component({
@@ -23,8 +21,7 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
     features: {}
   };
 
-  featureTypes: FeatureType[];
-  subscriptions: Subscription[] = [];
+  subscription: Subscription;
 
   radioButtonsOptionsForPowerEstimation = [
     { id: "square1", label: "5-6 кв. м.",   value: { minPower: 0.5,  maxPower: 0.75 } },
@@ -38,56 +35,28 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
     { id: "square0", label: "Не обирати",   value: null }
   ];
 
-  constructor(private featureTypeService: FeatureTypeService,
-              private productService: ProductService) { }
+  constructor(private productService: ProductService) { }
 
   ngOnInit() {
-    this.loadFeatureTypes();
-    this.loadProducts();
-  }
-
-  private loadFeatureTypes() {
-    var subscription = this.featureTypeService.getAllFeatureTypes()
-      .subscribe(featureTypes => this.featureTypes = featureTypes);
-    this.subscriptions.push(subscription);
-  }
-  
-  private loadProducts() {
-    var subscription = this.productService.getAll()
+    this.subscription = this.productService.getAll()
       .subscribe(products => {
         products.forEach(p => this.query.push( { product: p, matchingFeaturesNumber: 0 } ) );
       });
-    this.subscriptions.push(subscription);
   }
 
-  onRadioButtonFeatureSelect(featureTypeId: string, feature) {
-    var radioButtons = document.getElementsByName(featureTypeId);
-
-    radioButtons.forEach((radio: any) => {
-      if (radio.checked && radio.value) {
-        this.filter.features[radio.id] = feature.value;
-      } else {
-        delete this.filter.features[radio.id];
-      }
-    });
-  }
-
-  onCheckBoxFeatureSelect(feature) {
-    if (this.filter.features[feature.key]) {
-      delete this.filter.features[feature.key];
-    } else {
-      this.filter.features[feature.key] = feature.value;
-    }
-  }
-
-
-  onStepChanges(stepNumber) { 
+  onStepChanged(stepNumber) { 
     this.currentStep = stepNumber; 
-    if (this.currentStep < 2) return;  
+    if (this.currentStep < this.stepNames.length - 1) return;  
 
     this.sortProductsByMatchingFeaturesDesc();
     this.setProductsWithinPowerRange();
   }
+
+  onFeatureChanged(selectedFeatures) {
+    this.filter.features = selectedFeatures;
+  }
+
+
 
   private sortProductsByMatchingFeaturesDesc() {
     this.query.forEach(item => {
@@ -116,6 +85,6 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.subscription.unsubscribe();
   }
 }
