@@ -31,7 +31,7 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { ProductViewComponent } from './product-view/product-view.component';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { RecommendProductComponent } from './recommend-product/recommend-product.component';
-import { BsStepperComponent } from './recommend-product/bs-stepper/bs-stepper.component';
+import { BsStepperComponent } from './shared/bs-stepper/bs-stepper.component';
 
 @NgModule({
   declarations: [
