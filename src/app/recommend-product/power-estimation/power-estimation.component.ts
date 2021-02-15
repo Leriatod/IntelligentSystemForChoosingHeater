@@ -22,6 +22,8 @@ export class PowerEstimationComponent implements OnInit {
   ];
 
   ngOnInit() {
+    // for object comparison, if properties are equal
+    // then the appropriate radio button should be checked
     this.radioButtonsOptionsForPowerEstimation.forEach(radio => {
       if (!radio.value || !this.selectedPowerRange) return;
       var powerRangeIsEqual = 

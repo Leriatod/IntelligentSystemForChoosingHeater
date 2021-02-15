@@ -18,6 +18,7 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
   recommendedProducts: Product[] = [];
 
   filter: any = {
+    productsNumberToDisplay: 7,
     powerRange: null,
     features: {}
   };

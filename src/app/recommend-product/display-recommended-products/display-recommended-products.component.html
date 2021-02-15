@@ -1,0 +1,38 @@
+<div *ngIf="sortedProductsByMatchingFeaturesDesc.length === 0">
+    <h6 style="padding-top: 15px;">
+        На данний момент відсутні товари, які зодовольняють ваш запит.
+    </h6> 
+</div>
+<div *ngFor="let p of sortedProductsByMatchingFeaturesDesc; index as i">
+    <div *ngIf="i < productsNumberToDisplay" class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col-md-3 content">
+                <a [routerLink]="['/products', p.key]">
+                    <img class="card-img" src="{{ p.imageUrl }}">
+                </a>
+            </div>
+            
+            <div class="col-md-9">
+                <div class="card-body">
+                    <h5 class="card-title">{{ p.title }}</h5>
+                    <p class="card-text">{{ p.price }} грн.</p>
+                    <div *ngFor="let f of selectedFeatures | keyvalue">
+                        <div class="text-success" *ngIf="p.features[f.key]">
+                            {{ f.value.name }}
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <div class="text-danger" *ngIf="!p.features[f.key]">
+                            {{ f.value.name }}
+                            <i class="fa fa-times"></i>
+                        </div>
+                    </div> 
+                    <div style="padding-top: 15px;">
+                        <a style="width: 150px; " [routerLink]="['/products', p.key]" class="btn btn-primary">
+                            Переглянути
+                        </a> 
+                    </div>                  
+                </div>
+            </div>    
+        </div>
+    </div>         
+</div>

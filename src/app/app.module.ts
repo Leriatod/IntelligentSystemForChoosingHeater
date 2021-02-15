@@ -34,6 +34,7 @@ import { RecommendProductComponent } from './recommend-product/recommend-product
 import { BsStepperComponent } from './shared/bs-stepper/bs-stepper.component';
 import { DialogComponent } from './recommend-product/dialog/dialog.component';
 import { PowerEstimationComponent } from './recommend-product/power-estimation/power-estimation.component';
+import { DisplayRecommendedProductsComponent } from './recommend-product/display-recommended-products/display-recommended-products.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { PowerEstimationComponent } from './recommend-product/power-estimation/p
     RecommendProductComponent,
     BsStepperComponent,
     DialogComponent,
-    PowerEstimationComponent
+    PowerEstimationComponent,
+    DisplayRecommendedProductsComponent
   ],
   imports: [
     BrowserModule,
