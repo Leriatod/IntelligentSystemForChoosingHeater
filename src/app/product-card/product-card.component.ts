@@ -7,4 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class ProductCardComponent {
   @Input() product;
+  @Input() referenceToProductIsIncluded = false;
 }

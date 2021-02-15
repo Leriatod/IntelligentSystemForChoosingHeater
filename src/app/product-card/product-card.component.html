@@ -1,5 +1,12 @@
 <div class="card">
-  <img src="{{ product.imageUrl }}">
+  <a 
+    *ngIf="referenceToProductIsIncluded; else referenceNotIncluded"
+    [routerLink]="['/products', product.key]">
+    <img class="card-img-top" src="{{ product.imageUrl }}">
+  </a>
+  <ng-template #referenceNotIncluded>
+    <img class="card-img-top" src="{{ product.imageUrl }}">
+  </ng-template>
   <div class="container">
     <h5>{{ product.title }}</h5>
     <p>{{ product.price }} грн.</p>
