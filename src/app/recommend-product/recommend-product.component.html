@@ -9,13 +9,20 @@
     </div>
 
     <div class="fade-in" *ngIf="currentStep === 1">
+        <prioritizing-features
+            [selectedFeatures]="filter.features"
+            (featurePriorityChanged)="onFeaturePriorityChanged($event)">
+        </prioritizing-features>
+    </div>
+
+    <div class="fade-in" *ngIf="currentStep === 2">
         <power-estimation 
             [selectedPowerRange]="filter.powerRange"
             (powerRangeChanged)="onPowerRangeChanged($event)">
         </power-estimation>
     </div>
 
-    <div class="fade-in" *ngIf="currentStep === 2"> 
+    <div class="fade-in" *ngIf="currentStep === 3"> 
         <display-recommended-products
             [sortedProductsByMatchingFeaturesDesc]="recommendedProducts"
             [selectedFeatures]="filter.features"

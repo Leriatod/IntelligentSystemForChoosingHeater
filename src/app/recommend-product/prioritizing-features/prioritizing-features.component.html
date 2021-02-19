@@ -1,0 +1,18 @@
+<ng-template #itemTemplate let-item="item" let-index="index">
+    <span>{{ index + 1 }}. {{ item.value.name }}</span>
+</ng-template>
+<div class="row">
+    <div class="col-md-6">
+        <bs-sortable
+            [(ngModel)]="featuresArray"
+            [itemTemplate]="itemTemplate"
+            itemClass="sortable-item"
+            (onChange)="onFeatureOrderChange()">
+        </bs-sortable>
+    </div>
+    <div class="col-md-6">
+        <pre class="code-preview">{{ featuresArray | json }}</pre>
+    </div>
+</div>
+
+

@@ -18,8 +18,4 @@ export class FeatureTypeService {
       )
     );
   }
-
-  create(features) {
-    return this.db.object('/features').update(features);
-  }
 }

@@ -12,9 +12,9 @@ import { ProductService } from './../product.service';
 })
 export class RecommendProductComponent implements OnInit, OnDestroy {
   currentStep = 0;
-  stepNames = ["Діалог", "Розрахунок Потужності", "Рекомендовані Товари"];
+  stepNames = ["Діалог", "Пріорітетність", "Розрахунок Потужності", "Рекомендовані Товари"];
 
-  query: { product: Product, matchingFeaturesNumber: number }[] = [];
+  query: { product: Product, score: number }[] = [];
   recommendedProducts: Product[] = [];
 
   filter: any = {
@@ -30,7 +30,7 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.productService.getAll()
       .subscribe(products => {
-        products.forEach(p => this.query.push( { product: p, matchingFeaturesNumber: 0 } ) );
+        products.forEach(p => this.query.push( { product: p, score: 0 } ) );
       });
   }
 
@@ -43,7 +43,12 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
   }
 
   onFeatureChanged(selectedFeatures) {
+    console.log(selectedFeatures);
     this.filter.features = selectedFeatures;
+  }
+
+  onFeaturePriorityChanged(prioritizedFeatures) {
+    this.filter.features = prioritizedFeatures;
   }
 
   onPowerRangeChanged(powerRange) {
@@ -53,15 +58,17 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
   private sortProductsByMatchingFeaturesDesc() {
     this.query.forEach(item => {
       var product = item.product;
-      var counter = 0;
+      var totalScore = 0;
 
       for (var featureId in this.filter.features) {
         var productHasFeature = product.features.hasOwnProperty(featureId);
-        if (productHasFeature) counter++;
+        if (productHasFeature) 
+          totalScore += this.filter.features[featureId].coeff;
       }
-      item.matchingFeaturesNumber = counter;
+      item.score = totalScore;
     });
-    this.query = _.sortBy(this.query, item => -1 * item.matchingFeaturesNumber);
+    this.query = _.sortBy(this.query, item => -1 * item.score);
+    console.log(this.query);
   }
 
   private setProductsWithinPowerRange() {
