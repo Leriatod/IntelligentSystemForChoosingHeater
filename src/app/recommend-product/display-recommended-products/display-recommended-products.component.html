@@ -13,16 +13,16 @@
         <div class="col-md-2"></div>
         <div class="col-md-4">
             <div class="text-right">
-                <div *ngFor="let f of selectedFeatures | keyvalue">
+                <div *ngFor="let f of selectedFeatures">
                     <div class="text-success" *ngIf="p.features[f.key]">
-                        {{ f.value.name }}
+                        {{ f.name }}
                         <i class="fa fa-check"></i>
                     </div>
                 </div>
                 <div style="padding-top: 30px;"></div>
-                <div *ngFor="let f of selectedFeatures | keyvalue">
+                <div *ngFor="let f of selectedFeatures">
                     <div class="text-danger" *ngIf="!p.features[f.key]">
-                        {{ f.value.name }}
+                        {{ f.name }}
                         <i class="fa fa-times"></i>
                     </div>
                 </div>

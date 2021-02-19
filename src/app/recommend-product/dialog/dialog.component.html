@@ -1,43 +1,76 @@
-<spinner [isVisible]="!featureTypes"></spinner>
-<div *ngIf="featureTypes">
-    <div *ngFor="let ft of featureTypes; index as i" class="form-group">
-        <h6 style="padding-top: 15px;">{{ i + 1 }}. {{ ft.question }}</h6>
+<div class="row">
+  <div class="col-md-6">
+    <spinner [isVisible]="!featureTypes"></spinner>
+    <div *ngIf="featureTypes">
+      <div *ngFor="let ft of featureTypes; index as i" class="form-group">
+        <h6 style="padding-top: 15px">{{ i + 1 }}. {{ ft.question }}</h6>
         <ng-template #canSelectOneFeature>
-            <div *ngFor="let f of ft.features | keyvalue" class="custom-control custom-radio">
-                <input 
-                    type="radio" 
-                    id="{{ f.key }}"
-                    name="{{ ft.key }}" 
-                    [value]="true"
-                    (change)="onRadioButtonFeatureSelect(ft.key, f)"
-                    class="custom-control-input"
-                    [checked]="selectedFeatures[f.key]">
-                <label class="custom-control-label" for="{{ f.key }}">{{ f.value.answer }}</label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input 
-                    type="radio" 
-                    id="{{ i }}"
-                    name="{{ ft.key }}"
-                    [value]="null" 
-                    (change)="onRadioButtonFeatureSelect(ft.key)"
-                    class="custom-control-input" 
-                    checked="">
-                <label class="custom-control-label" for="{{ i }}">Не важливо</label>
-            </div>
+          <div
+            *ngFor="let f of ft.features | keyvalue"
+            class="custom-control custom-radio"
+          >
+            <input
+              type="radio"
+              id="{{ f.key }}"
+              name="{{ ft.key }}"
+              [value]="true"
+              (change)="onRadioButtonFeatureSelect(ft.key, f)"
+              class="custom-control-input"
+              [checked]="isFeatureSelected(f)"
+            />
+            <label class="custom-control-label" for="{{ f.key }}">
+              {{ f.value.answer }}
+            </label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input
+              type="radio"
+              id="{{ i }}"
+              name="{{ ft.key }}"
+              [value]="null"
+              (change)="onRadioButtonFeatureSelect(ft.key)"
+              class="custom-control-input"
+              checked=""
+            />
+            <label class="custom-control-label" for="{{ i }}">Не важливо</label>
+          </div>
         </ng-template>
-        
+
         <div *ngIf="ft.canSelectManyFeatures; else canSelectOneFeature">
-            <div *ngFor="let f of ft.features | keyvalue" class="custom-control custom-switch">
-                <input 
-                    type="checkbox" 
-                    class="custom-control-input"
-                    (change)="onCheckBoxFeatureSelect(f)"
-                    id="{{ f.key }}"
-                    [value]="true"
-                    [checked]="selectedFeatures[f.key]">
-                <label class="custom-control-label" for="{{ f.key }}">{{ f.value.answer }}</label>
-            </div>
+          <div
+            *ngFor="let f of ft.features | keyvalue"
+            class="custom-control custom-switch"
+          >
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              (change)="onCheckBoxFeatureSelect(f)"
+              id="{{ f.key }}"
+              [value]="true"
+              [checked]="isFeatureSelected(f)"
+            />
+            <label class="custom-control-label" for="{{ f.key }}">
+              {{ f.value.answer }}
+            </label>
+          </div>
         </div>
-    </div>        
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h4 *ngIf="selectedFeatures.length > 1">Відсортуйте за значимістю:</h4>
+    <ng-template #itemTemplate let-item="item" let-index="index">
+      <span class="badge badge-primary badge-pill">{{ index + 1 }}</span>
+      {{ item.value.name }}
+    </ng-template>
+    <div class="sticky-top">
+      <bs-sortable
+        [(ngModel)]="selectedFeatures"
+        [itemTemplate]="itemTemplate"
+        itemClass="sortable-item"
+        (onChange)="onFeatureOrderChange()"
+      >
+      </bs-sortable>
+    </div>
+  </div>
 </div>

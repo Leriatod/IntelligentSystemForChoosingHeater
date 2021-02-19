@@ -32,7 +32,6 @@ import {
   DisplayRecommendedProductsComponent,
 } from './recommend-product/display-recommended-products/display-recommended-products.component';
 import { PowerEstimationComponent } from './recommend-product/power-estimation/power-estimation.component';
-import { PrioritizingFeaturesComponent } from './recommend-product/prioritizing-features/prioritizing-features.component';
 import { RecommendProductComponent } from './recommend-product/recommend-product.component';
 import { BsStepperComponent } from './shared/bs-stepper/bs-stepper.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
@@ -56,8 +55,7 @@ import { SortableModule } from 'ngx-bootstrap/sortable';
     BsStepperComponent,
     DialogComponent,
     PowerEstimationComponent,
-    DisplayRecommendedProductsComponent,
-    PrioritizingFeaturesComponent
+    DisplayRecommendedProductsComponent
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,7 @@ import { ProductService } from './../product.service';
 })
 export class RecommendProductComponent implements OnInit, OnDestroy {
   currentStep = 0;
-  stepNames = ["Діалог", "Пріорітетність", "Розрахунок Потужності", "Рекомендовані Товари"];
+  stepNames = ["Діалог", "Розрахунок Потужності", "Рекомендовані Товари"];
 
   query: { product: Product, score: number }[] = [];
   recommendedProducts: Product[] = [];
@@ -20,7 +20,7 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
   filter: any = {
     productsNumberToDisplay: 7,
     powerRange: null,
-    features: {}
+    features: []
   };
 
   subscription: Subscription;
@@ -43,12 +43,7 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
   }
 
   onFeatureChanged(selectedFeatures) {
-    console.log(selectedFeatures);
     this.filter.features = selectedFeatures;
-  }
-
-  onFeaturePriorityChanged(prioritizedFeatures) {
-    this.filter.features = prioritizedFeatures;
   }
 
   onPowerRangeChanged(powerRange) {
@@ -60,11 +55,10 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
       var product = item.product;
       var totalScore = 0;
 
-      for (var featureId in this.filter.features) {
-        var productHasFeature = product.features.hasOwnProperty(featureId);
-        if (productHasFeature) 
-          totalScore += this.filter.features[featureId].coeff;
-      }
+      this.filter.features.forEach(feature => {
+        var productHasFeature = product.features.hasOwnProperty(feature.key);
+        if (productHasFeature) totalScore += feature.coeff;
+      });
       item.score = totalScore;
     });
     this.query = _.sortBy(this.query, item => -1 * item.score);

@@ -8,6 +8,6 @@ import { Product } from 'src/app/models/product';
 })
 export class DisplayRecommendedProductsComponent {
   @Input() sortedProductsByMatchingFeaturesDesc: Product[] = [];
-  @Input() selectedFeatures = {};
+  @Input() selectedFeatures = [];
   @Input() productsNumberToDisplay = 5;
 }
