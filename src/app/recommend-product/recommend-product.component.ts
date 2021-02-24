@@ -62,7 +62,6 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
       item.score = totalScore;
     });
     this.query = _.sortBy(this.query, item => -1 * item.score);
-    console.log(this.query);
   }
 
   private setProductsWithinPowerRange() {

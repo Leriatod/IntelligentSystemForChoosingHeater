@@ -18,7 +18,14 @@
         </button>
     
         <div class="collapse navbar-collapse" [class.show]="isExpanded" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto"></ul>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/recommend-product" routerLinkActive="active">
+                        <i class="fa fa-cogs" aria-hidden="true"></i>
+                        Інтелектуальна система
+                    </a>
+                </li> 
+            </ul>
             <ul class="navbar-nav">
                 <ng-template #anonymousUser>
                     <li class="nav-item">
