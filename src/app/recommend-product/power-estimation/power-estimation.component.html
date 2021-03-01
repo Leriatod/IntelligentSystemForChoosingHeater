@@ -6,8 +6,8 @@
             id="{{ r.id }}"
             name="power" 
             [value]="r.value"
-            [(ngModel)]="selectedPowerRange"
-            (change)="onPowerRangeChanged(r.value)"
+            [(ngModel)]="powerRange"
+            (change)="onPowerRangeChange(r.value)"
             class="custom-control-input">
         <label class="custom-control-label" for="{{ r.id }}">{{ r.label }}</label>
     </div>

@@ -20,6 +20,7 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
   filter: any = {
     productsNumberToDisplay: 7,
     powerRange: null,
+    maxPrice: 2000,
     features: []
   };
 
@@ -40,14 +41,7 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
 
     this.sortProductsByMatchingFeaturesDesc();
     this.setProductsWithinPowerRange();
-  }
-
-  onFeatureChanged(selectedFeatures) {
-    this.filter.features = selectedFeatures;
-  }
-
-  onPowerRangeChanged(powerRange) {
-    this.filter.powerRange = powerRange;
+    this.filterProductsByMaxPrice();
   }
 
   private sortProductsByMatchingFeaturesDesc() {
@@ -74,6 +68,11 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
       var powerIsWithinRange = power >= minPower && power <= maxPower;
       return powerIsWithinRange;
     }).map(item => item.product);
+  }
+
+  private filterProductsByMaxPrice() {
+    this.recommendedProducts = _.filter(this.recommendedProducts, 
+      p => p.price <= this.filter.maxPrice);
   }
 
   ngOnDestroy() {

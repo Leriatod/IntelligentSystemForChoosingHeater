@@ -6,8 +6,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./power-estimation.component.scss']
 })
 export class PowerEstimationComponent implements OnInit {
-  @Input() selectedPowerRange = null;
-  @Output() powerRangeChanged = new EventEmitter();
+  @Input() powerRange = null;
+  @Output() powerRangeChange = new EventEmitter();
 
   radioButtonsOptionsForPowerEstimation = [
     { id: "square1", label: "5-6 кв. м.",   value: { minPower: 0.5,  maxPower: 0.75 } },
@@ -25,15 +25,15 @@ export class PowerEstimationComponent implements OnInit {
     // for object comparison, if properties are equal
     // then the appropriate radio button should be checked
     this.radioButtonsOptionsForPowerEstimation.forEach(radio => {
-      if (!radio.value || !this.selectedPowerRange) return;
+      if (!radio.value || !this.powerRange) return;
       var powerRangeIsEqual = 
-        radio.value.minPower == this.selectedPowerRange.minPower && 
-        radio.value.maxPower == this.selectedPowerRange.maxPower;
-      if (powerRangeIsEqual) this.selectedPowerRange = radio.value;
+        radio.value.minPower == this.powerRange.minPower && 
+        radio.value.maxPower == this.powerRange.maxPower;
+      if (powerRangeIsEqual) this.powerRange = radio.value;
     });
   }
  
-  onPowerRangeChanged() {
-    this.powerRangeChanged.emit(this.selectedPowerRange);
+  onPowerRangeChange() {
+    this.powerRangeChange.emit(this.powerRange);
   }
 }

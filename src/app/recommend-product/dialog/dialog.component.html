@@ -2,6 +2,21 @@
   <div class="col-md-6">
     <spinner [isVisible]="!featureTypes"></spinner>
     <div *ngIf="featureTypes">
+      <label for="maxPrice">Цінова політика</label>
+      <input
+        min="1000"
+        max="4000"
+        step="500"
+        [(ngModel)]="maxPrice"
+        (change)="onMaxPriceChange()"
+        name="maxPrice"
+        type="range"
+        class="custom-range"
+        id="maxPrice"
+      />
+      <hr />
+      <pre>До {{ maxPrice }} грн.</pre>
+
       <div *ngFor="let ft of featureTypes; index as i" class="form-group">
         <h6 style="padding-top: 15px">{{ i + 1 }}. {{ ft.question }}</h6>
         <ng-template #canSelectOneFeature>
@@ -32,7 +47,7 @@
               class="custom-control-input"
               checked=""
             />
-            <label class="custom-control-label" for="{{ i }}">Не важливо</label>
+            <label class="custom-control-label" for="{{ i }}">Не обирати</label>
           </div>
         </ng-template>
 
@@ -58,14 +73,14 @@
     </div>
   </div>
   <div class="col-md-6">
-    <h4 *ngIf="selectedFeatures.length > 1">Відсортуйте за значимістю:</h4>
+    <h4 *ngIf="features.length > 1">Відсортуйте за значимістю:</h4>
     <ng-template #itemTemplate let-item="item" let-index="index">
       <span class="badge badge-primary badge-pill">{{ index + 1 }}</span>
       {{ item.value.name }}
     </ng-template>
     <div class="sticky-top">
       <bs-sortable
-        [(ngModel)]="selectedFeatures"
+        [(ngModel)]="features"
         [itemTemplate]="itemTemplate"
         itemClass="sortable-item"
         (onChange)="onFeatureOrderChange()"
