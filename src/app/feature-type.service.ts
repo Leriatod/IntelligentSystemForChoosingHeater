@@ -11,7 +11,7 @@ export class FeatureTypeService {
 
   constructor(private db: AngularFireDatabase) { }
 
-  getAllFeatureTypes(): Observable<FeatureType[]> {
+  getAll(): Observable<FeatureType[]> {
     return this.db.list('/feature-types').snapshotChanges().pipe(
       map(changes => changes.map( (c: any) => 
         ( { key: c.payload.key, ...c.payload.val() } as FeatureType) )

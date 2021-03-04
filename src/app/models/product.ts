@@ -3,7 +3,12 @@ export class Product {
     title: string = '';
     price: number = null;
     power: number = null;
+    category: string = '';
     imageUrl: string = '';
     description: string = '';
-    features: { [featureId: string]: { name: string } } = {};
+    features: { 
+        [featureKey: string]: { 
+            name: string 
+        } 
+    } = {};
 }

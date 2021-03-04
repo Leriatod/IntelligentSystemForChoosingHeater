@@ -6,7 +6,7 @@ export interface FeatureType {
                       // used in dialog with user
     canSelectManyFeatures: boolean, // true - rendering checkboxes, false - radio buttons
     features: { 
-        [featureId: string]: { 
+        [featureKey: string]: { 
             answer: string, 
             name: string 
         } 

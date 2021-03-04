@@ -1,12 +1,14 @@
-import { FeatureType } from './../../models/feature-type';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/product.service';
 
+import { CategoryService } from './../../category.service';
 import { FeatureTypeService } from './../../feature-type.service';
+import { Category } from './../../models/category';
+import { FeatureType } from './../../models/feature-type';
 
 
 @Component({
@@ -19,31 +21,39 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   isProductLoading = false;
   id: string;
   featureTypes: FeatureType[];
+  categories: Category[];
   subscriptions: Subscription[] = [];
 
   constructor(private productService: ProductService,
               private featureTypeService: FeatureTypeService,
+              private categoryService: CategoryService,
               private router: Router,
               private route: ActivatedRoute,
               private toastr: ToastrService) { }
 
   ngOnInit() {
     this.loadFeatureTypes();
+    this.loadCategories();
     this.loadProductById();
   }
 
   private loadFeatureTypes() {
-    var subscription = this.featureTypeService.getAllFeatureTypes()
+    var subscription = this.featureTypeService.getAll()
       .subscribe(featureTypes => this.featureTypes = featureTypes);
+    this.subscriptions.push(subscription);
+  }
+
+  private loadCategories() {
+    var subscription = this.categoryService.getAll()
+      .subscribe(categories => { this.categories = categories; console.log(this.categories) });
     this.subscriptions.push(subscription);
   }
 
   private loadProductById() {
     this.id = this.route.snapshot.paramMap.get('id');
     if (!this.id) return;
-    
-    this.isProductLoading = true;
-    
+    this.isProductLoading = true; 
+
     var subscription = this.productService.get(this.id).subscribe(product => {
       if (!product) {
         this.navigateToAdminProducts();
@@ -73,16 +83,14 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     this.toastr.success("Товар успішно видалено!", "Оновлення Бази Даних");
   }
 
-  private navigateToAdminProducts() {
-    this.router.navigate(['/admin/products']);
-  }
+  private navigateToAdminProducts() { this.router.navigate(['/admin/products']); }
 
   onCheckBoxChange(feature) {
     if (this.product.features[feature.key]) {
       delete this.product.features[feature.key];
-    } else {
-      this.product.features[feature.key] = { name: feature.value.name };
+      return;
     }
+    this.product.features[feature.key] = { name: feature.value.name };
   }
 
   onRadioButtonClick(featureTypeKey: string, feature) {
@@ -91,9 +99,9 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     radioButtons.forEach((radio: any) => {
       if (radio.checked && radio.value) {
         this.product.features[radio.id] = { name: feature.value.name };
-      } else {
-        delete this.product.features[radio.id];
+        return;
       }
+      delete this.product.features[radio.id];
     });
   }
 

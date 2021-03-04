@@ -24,7 +24,7 @@ export class DialogComponent implements OnInit, OnDestroy {
   constructor(private featureTypeService: FeatureTypeService) { }
 
   ngOnInit() {
-    this.subscription = this.featureTypeService.getAllFeatureTypes()
+    this.subscription = this.featureTypeService.getAll()
       .subscribe(featureTypes => this.featureTypes = featureTypes);
   }
 
@@ -32,8 +32,8 @@ export class DialogComponent implements OnInit, OnDestroy {
     this.maxPriceChange.emit(this.maxPrice);
   }
 
-  onRadioButtonFeatureSelect(featureTypeId: string, feature) {
-    var radioButtons = document.getElementsByName(featureTypeId);
+  onRadioButtonFeatureSelect(featureTypeKey: string, feature) {
+    var radioButtons = document.getElementsByName(featureTypeKey);
     
     radioButtons.forEach((radio: any) => {
       if (radio.checked && radio.value) {
