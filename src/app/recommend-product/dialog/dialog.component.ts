@@ -1,8 +1,11 @@
-import { FeatureTypeService } from './../../feature-type.service';
-import { Subscription } from 'rxjs';
-import { FeatureType } from './../../models/feature-type';
-import { Component, OnInit, OnDestroy, EventEmitter, Output, Input, ViewChild } from '@angular/core';
+import { Options } from '@angular-slider/ngx-slider';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { SortableComponent } from 'ngx-bootstrap/sortable';
+import { Subscription } from 'rxjs';
+
+import { FeatureTypeService } from './../../feature-type.service';
+import { FeatureType } from './../../models/feature-type';
+
 
 @Component({
   selector: 'user-dialog',
@@ -14,6 +17,7 @@ export class DialogComponent implements OnInit, OnDestroy {
   @Output() maxPriceChange = new EventEmitter();
   @Input() features = [];
   @Input() maxPrice = 2000;
+  sliderOptions: Options = { floor: 1000, step: 250, ceil: 4000 };
   featureTypes: FeatureType[];
   subscription: Subscription;
 

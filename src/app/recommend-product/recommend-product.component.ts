@@ -20,7 +20,7 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
   filter: any = {
     productsNumberToDisplay: 7,
     powerRange: null,
-    maxPrice: 2000,
+    maxPrice: 2500,
     features: []
   };
 

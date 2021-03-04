@@ -2,18 +2,12 @@
   <div class="col-md-6">
     <spinner [isVisible]="!featureTypes"></spinner>
     <div *ngIf="featureTypes">
-      <label for="maxPrice">Цінова політика</label>
-      <input
-        min="1000"
-        max="4000"
-        step="500"
-        [(ngModel)]="maxPrice"
-        (change)="onMaxPriceChange()"
-        name="maxPrice"
-        type="range"
-        class="custom-range"
-        id="maxPrice"
-      />
+      <label>Цінова політика</label>
+      <ngx-slider
+        [(value)]="maxPrice"
+        (valueChange)="onMaxPriceChange()"
+        [options]="sliderOptions"
+      ></ngx-slider>
       <hr />
       <pre>До {{ maxPrice }} грн.</pre>
 

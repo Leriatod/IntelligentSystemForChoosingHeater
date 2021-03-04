@@ -1,3 +1,4 @@
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -8,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomFormsModule } from 'ng2-validation';
+import { SortableModule } from 'ngx-bootstrap/sortable';
 import { ToastrModule } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 
@@ -36,7 +38,6 @@ import { RecommendProductComponent } from './recommend-product/recommend-product
 import { BsStepperComponent } from './shared/bs-stepper/bs-stepper.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { UserService } from './user.service';
-import { SortableModule } from 'ngx-bootstrap/sortable';
 
 @NgModule({
   declarations: [
@@ -71,8 +72,8 @@ import { SortableModule } from 'ngx-bootstrap/sortable';
 
     NgbModule,
     SortableModule.forRoot(),
-
     ToastrModule.forRoot(),
+    NgxSliderModule,
 
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
