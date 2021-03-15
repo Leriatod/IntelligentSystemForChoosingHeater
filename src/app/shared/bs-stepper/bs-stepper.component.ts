@@ -7,9 +7,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class BsStepperComponent {
   @Input() stepNames = []; 
+  @Input() currentStep = 0;
   @Output() stepChanged = new EventEmitter();
-
-  currentStep: number = 0;
 
   changeStep(stepNumber) {
     this.currentStep = stepNumber;
