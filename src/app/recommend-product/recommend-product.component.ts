@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product';
 import * as _ from 'underscore';
+import { FeatureTypeService } from '../feature-type.service';
+import { FeatureType } from '../models/feature-type';
 import { ProductService } from './../product.service';
 
 
@@ -11,28 +13,45 @@ import { ProductService } from './../product.service';
   styleUrls: ['./recommend-product.component.scss']
 })
 export class RecommendProductComponent implements OnInit, OnDestroy {
+  private readonly POWER_PER_SQUARE_METER = 0.1; // in kW
+
   currentStep = 0;
-  stepNames = ["Діалог", "Розрахунок Потужності", "Рекомендовані Товари"];
+  stepNames = ["Діалог", "Рекомендовані Товари"];
 
   query: { product: Product, score: number }[] = [];
   recommendedProducts: Product[] = [];
 
   filter: any = {
-    productsNumberToDisplay: 7,
-    powerRange: null,
+    productsNumberToDisplay: 10,
+    powerPerSquareMeter: this.POWER_PER_SQUARE_METER,
+    roomArea: 0,
     maxPrice: 2500,
     features: []
   };
 
-  subscription: Subscription;
+  featureTypes: FeatureType[];
+  subscriptions: Subscription[] = [];
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService,
+              private featureTypeService: FeatureTypeService) { }
 
   ngOnInit() {
-    this.subscription = this.productService.getAll()
+    this.loadProducts();
+    this.loadFeatureTypes();
+  }
+
+  private loadProducts() {
+    var subscription = this.productService.getAll()
       .subscribe(products => {
         products.forEach(p => this.query.push( { product: p, score: 0 } ) );
       });
+    this.subscriptions.push(subscription);
+  }
+
+  private loadFeatureTypes() {
+    var subscription = this.featureTypeService.getAll()
+      .subscribe(featureTypes => this.featureTypes = featureTypes);
+    this.subscriptions.push(subscription);
   }
 
   onStepChanged(stepNumber) { 
@@ -40,7 +59,7 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
     if (this.currentStep < this.stepNames.length - 1) return;  
 
     this.sortProductsByMatchingFeaturesDesc();
-    this.setProductsWithinPowerRange();
+    this.filterProductsByMinPower();
     this.filterProductsByMaxPrice();
   }
 
@@ -58,16 +77,10 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
     this.query = _.sortBy(this.query, item => -1 * item.score);
   }
 
-  private setProductsWithinPowerRange() {
-    this.recommendedProducts = _.filter(this.query, item => {
-      if (!this.filter.powerRange) return true;
-
-      var power = item.product.power;
-      var minPower = this.filter.powerRange.minPower;
-      var maxPower = this.filter.powerRange.maxPower;
-      var powerIsWithinRange = power >= minPower && power <= maxPower;
-      return powerIsWithinRange;
-    }).map(item => item.product);
+  private filterProductsByMinPower() {
+    var minPower = this.filter.roomArea * this.POWER_PER_SQUARE_METER;
+    this.recommendedProducts = _.filter(this.query, item => item.product.power >= minPower)
+      .map(item => item.product);
   }
 
   private filterProductsByMaxPrice() {
@@ -76,6 +89,6 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

@@ -1,36 +1,41 @@
 import { Options } from '@angular-slider/ngx-slider';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { SortableComponent } from 'ngx-bootstrap/sortable';
-import { Subscription } from 'rxjs';
 
-import { FeatureTypeService } from './../../feature-type.service';
 import { FeatureType } from './../../models/feature-type';
-
 
 @Component({
   selector: 'user-dialog',
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.scss']
 })
-export class DialogComponent implements OnInit, OnDestroy {
+export class DialogComponent {
   @Output() featuresChange = new EventEmitter();
   @Output() maxPriceChange = new EventEmitter();
+  @Output() roomAreaChange = new EventEmitter();
   @Input() features = [];
   @Input() maxPrice = 2000;
-  sliderOptions: Options = { floor: 1000, step: 250, ceil: 4000 };
-  featureTypes: FeatureType[];
-  subscription: Subscription;
+  @Input() roomArea = 0;
+  @Input() powerPerSquareMeter = 0.1; // kW
+  @Input() featureTypes: FeatureType[];
 
-  constructor(private featureTypeService: FeatureTypeService) { }
+  priceSliderOptions: Options = { 
+    floor: 1000, 
+    step: 250, 
+    ceil: 4000, 
+    translate: (price: number) => `${price} грн.`
+  };
+  roomAreaSliderOptions: Options = {
+    floor: 0,
+    ceil: 35,
+    translate: (roomArea: number) => {
+      if (roomArea === 0) return 'Не враховувати';
+      return `${roomArea} м2`;
+    }
+  };
 
-  ngOnInit() {
-    this.subscription = this.featureTypeService.getAll()
-      .subscribe(featureTypes => this.featureTypes = featureTypes);
-  }
-
-  onMaxPriceChange() {
-    this.maxPriceChange.emit(this.maxPrice);
-  }
+  onMaxPriceChange() { this.maxPriceChange.emit(this.maxPrice); }
+  onRoomAreaChange() { this.roomAreaChange.emit(this.roomArea); }
 
   onRadioButtonFeatureSelect(featureTypeKey: string, feature) {
     var radioButtons = document.getElementsByName(featureTypeKey);
@@ -79,9 +84,5 @@ export class DialogComponent implements OnInit, OnDestroy {
   isFeatureSelected(feature) {
     var index = this.features.findIndex(f => f.key === feature.key);
     return index > -1;
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 }

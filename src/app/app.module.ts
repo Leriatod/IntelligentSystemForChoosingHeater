@@ -33,7 +33,6 @@ import { DialogComponent } from './recommend-product/dialog/dialog.component';
 import {
   DisplayRecommendedProductsComponent,
 } from './recommend-product/display-recommended-products/display-recommended-products.component';
-import { PowerEstimationComponent } from './recommend-product/power-estimation/power-estimation.component';
 import { RecommendProductComponent } from './recommend-product/recommend-product.component';
 import { BsStepperComponent } from './shared/bs-stepper/bs-stepper.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
@@ -55,7 +54,6 @@ import { UserService } from './user.service';
     RecommendProductComponent,
     BsStepperComponent,
     DialogComponent,
-    PowerEstimationComponent,
     DisplayRecommendedProductsComponent
   ],
   imports: [

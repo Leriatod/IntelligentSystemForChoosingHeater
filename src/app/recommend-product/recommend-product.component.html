@@ -5,15 +5,20 @@
 <br />
 <div class="bs-stepper-content">
   <div class="fade-in" *ngIf="currentStep === 0">
-    <user-dialog [(maxPrice)]="filter.maxPrice" [(features)]="filter.features">
-    </user-dialog>
+    <spinner [isVisible]="!featureTypes"></spinner>
+    <ng-container *ngIf="featureTypes">
+      <user-dialog
+        [(maxPrice)]="filter.maxPrice"
+        [(features)]="filter.features"
+        [(roomArea)]="filter.roomArea"
+        [featureTypes]="featureTypes"
+        [powerPerSquareMeter]="filter.powerPerSquareMeter"
+      >
+      </user-dialog>
+    </ng-container>
   </div>
 
   <div class="fade-in" *ngIf="currentStep === 1">
-    <power-estimation [(powerRange)]="filter.powerRange"> </power-estimation>
-  </div>
-
-  <div class="fade-in" *ngIf="currentStep === 2">
     <display-recommended-products
       [sortedProductsByMatchingFeaturesDesc]="recommendedProducts"
       [selectedFeatures]="filter.features"

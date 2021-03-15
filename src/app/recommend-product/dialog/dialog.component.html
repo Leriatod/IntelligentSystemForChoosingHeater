@@ -1,15 +1,28 @@
 <div class="row">
   <div class="col-md-6">
-    <spinner [isVisible]="!featureTypes"></spinner>
-    <div *ngIf="featureTypes">
-      <label>Цінова політика</label>
-      <ngx-slider
-        [(value)]="maxPrice"
-        (valueChange)="onMaxPriceChange()"
-        [options]="sliderOptions"
-      ></ngx-slider>
-      <hr />
-      <pre>До {{ maxPrice }} грн.</pre>
+    <div>
+      <div class="card card-body bg-light">
+        <label><b>Цінова політика</b></label>
+        <ngx-slider
+          [(value)]="maxPrice"
+          (valueChange)="onMaxPriceChange()"
+          [options]="priceSliderOptions"
+        ></ngx-slider>
+        <hr />
+        <pre>До <b>{{ maxPrice }} грн.</b></pre>
+        <br />
+        <label><b>Площа кімнати</b></label>
+        <ngx-slider
+          [(value)]="roomArea"
+          (valueChange)="onRoomAreaChange()"
+          [options]="roomAreaSliderOptions"
+        ></ngx-slider>
+        <ng-container *ngIf="roomArea > 0">
+          <hr />
+          <pre>Мінімальна потужність: <b>{{ roomArea * powerPerSquareMeter | number: "1.1-1" }} кВт.</b></pre>
+        </ng-container>
+      </div>
+      <br />
 
       <div *ngFor="let ft of featureTypes; index as i" class="form-group">
         <h6 style="padding-top: 15px">{{ i + 1 }}. {{ ft.question }}</h6>
