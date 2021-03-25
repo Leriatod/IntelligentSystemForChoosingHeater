@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/product.service';
 
@@ -45,7 +45,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
   private loadCategories() {
     var subscription = this.categoryService.getAll()
-      .subscribe(categories => { this.categories = categories; console.log(this.categories) });
+      .subscribe(categories => this.categories = categories);
     this.subscriptions.push(subscription);
   }
 
@@ -58,9 +58,9 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       if (!product) {
         this.navigateToAdminProducts();
         return;
-      } 
+      }
+      product.features = product.features || {};
       this.product = product;
-      if (!this.product.features) this.product.features = {};
       this.isProductLoading = false;
     });
     this.subscriptions.push(subscription);
@@ -83,26 +83,8 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     this.toastr.success("Товар успішно видалено!", "Оновлення Бази Даних");
   }
 
-  private navigateToAdminProducts() { this.router.navigate(['/admin/products']); }
-
-  onCheckBoxChange(feature) {
-    if (this.product.features[feature.key]) {
-      delete this.product.features[feature.key];
-      return;
-    }
-    this.product.features[feature.key] = { name: feature.value.name };
-  }
-
-  onRadioButtonClick(featureTypeKey: string, feature) {
-    var radioButtons = document.getElementsByName(featureTypeKey);
-
-    radioButtons.forEach((radio: any) => {
-      if (radio.checked && radio.value) {
-        this.product.features[radio.id] = { name: feature.value.name };
-        return;
-      }
-      delete this.product.features[radio.id];
-    });
+  private navigateToAdminProducts() { 
+    this.router.navigate(['/admin/products']); 
   }
 
   ngOnDestroy() {

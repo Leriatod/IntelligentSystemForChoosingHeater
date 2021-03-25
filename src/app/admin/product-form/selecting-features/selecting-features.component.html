@@ -1,0 +1,53 @@
+<div *ngIf="featureTypes as featureTypes">
+  <div *ngFor="let ft of featureTypes; index as i" class="form-group">
+    <label for="{{ ft.key }}">{{ i + 1 }}. {{ ft.name }}</label>
+    <ng-template #canSelectOneFeature>
+      <div
+        *ngFor="let f of ft.features | keyvalue"
+        class="custom-control custom-radio"
+      >
+        <input
+          type="radio"
+          id="{{ f.key }}"
+          [checked]="features[f.key]"
+          (click)="onRadioButtonClick(ft.key, f)"
+          name="{{ ft.key }}"
+          class="custom-control-input"
+        />
+        <label class="custom-control-label" for="{{ f.key }}">{{
+          f.value.name
+        }}</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input
+          type="radio"
+          id="{{ i }}"
+          name="{{ ft.key }}"
+          [value]="null"
+          (change)="onRadioButtonClick(ft.key)"
+          class="custom-control-input"
+          checked=""
+        />
+        <label class="custom-control-label" for="{{ i }}">Не обирати</label>
+      </div>
+    </ng-template>
+
+    <div *ngIf="ft.canSelectManyFeatures; else canSelectOneFeature">
+      <div
+        *ngFor="let f of ft.features | keyvalue"
+        class="custom-control custom-switch"
+      >
+        <input
+          type="checkbox"
+          class="custom-control-input"
+          id="{{ f.key }}"
+          (change)="onCheckBoxChange(f)"
+          [checked]="features[f.key]"
+        />
+        <label class="custom-control-label" for="{{ f.key }}">
+          {{ f.value.name }}
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

@@ -37,6 +37,7 @@ import { RecommendProductComponent } from './recommend-product/recommend-product
 import { BsStepperComponent } from './shared/bs-stepper/bs-stepper.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { UserService } from './user.service';
+import { SelectingFeaturesComponent } from './admin/product-form/selecting-features/selecting-features.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { UserService } from './user.service';
     RecommendProductComponent,
     BsStepperComponent,
     DialogComponent,
-    DisplayRecommendedProductsComponent
+    DisplayRecommendedProductsComponent,
+    SelectingFeaturesComponent
   ],
   imports: [
     BrowserModule,

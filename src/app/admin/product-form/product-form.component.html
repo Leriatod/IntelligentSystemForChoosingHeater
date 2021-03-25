@@ -1,185 +1,185 @@
 <spinner [isVisible]="isProductLoading"></spinner>
 <div *ngIf="!isProductLoading" class="row">
-    <div class="col-md-6">
+  <div class="col-md-6">
+    <form #f="ngForm" (ngSubmit)="save()">
+      <ul ngbNav #nav="ngbNav" [(activeId)]="activeTabId" class="nav-tabs">
+        <li [ngbNavItem]="1">
+          <a ngbNavLink>Загальні відомості</a>
+          <ng-template ngbNavContent>
+            <div class="form-group">
+              <label for="title">Товар</label>
+              <input
+                #title="ngModel"
+                [(ngModel)]="product.title"
+                name="title"
+                type="text"
+                class="form-control"
+                id="name"
+                required
+              />
+              <div
+                class="alert alert-danger"
+                *ngIf="title.touched && title.invalid"
+              >
+                Назва є обов'язковою.
+              </div>
+            </div>
 
-        <form #f="ngForm" (ngSubmit)="save()">
-            <ul ngbNav #nav="ngbNav" [(activeId)]="activeTabId" class="nav-tabs">
-                <li [ngbNavItem]="1">
-                  <a ngbNavLink>Загальні відомості</a>
-                  <ng-template ngbNavContent>
-                        <div class="form-group">
-                            <label for="title">Товар</label>
-                            <input 
-                                #title="ngModel"
-                                [(ngModel)]="product.title"
-                                name="title"
-                                type="text" 
-                                class="form-control" 
-                                id="name" 
-                                required>
-                            <div class="alert alert-danger" *ngIf="title.touched && title.invalid">
-                                Назва є обов'язковою.
-                            </div>  
-                        </div>
-            
-                        <div class="form-group">
-                            <label for="price">Ціна</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">₴</span>
-                                </div>
-            
-                                <input 
-                                    #price="ngModel"
-                                    [(ngModel)]="product.price"
-                                    name="price"
-                                    type="number" 
-                                    class="form-control" 
-                                    id="price" 
-                                    required
-                                    [min]="0">
-                                <div class="input-group-append">
-                                    <span class="input-group-text">.00</span>
-                                </div>
-                            </div>
-                            <div class="alert alert-danger" *ngIf="price.touched && price.invalid">
-                                <div *ngIf="price.errors.required">Ціна є обов'язковою (в грн.).</div>
-                                <div *ngIf="price.errors.min">Ціна має бути 0 або більше.</div>    
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="power">Потужність</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">кВт</span>
-                                </div>
-            
-                                <input 
-                                    #power="ngModel"
-                                    [(ngModel)]="product.power"
-                                    name="power"
-                                    type="number" 
-                                    class="form-control" 
-                                    id="power" 
-                                    required
-                                    [min]="0">
-                            </div>
-                            <div class="alert alert-danger" *ngIf="power.touched && power.invalid">
-                                <div *ngIf="power.errors.required">Потужність є обов'язковою (в кВт).</div>
-                                <div *ngIf="power.errors.min">Потужність має бути 0 або більше.</div>    
-                            </div>
-                        </div>
+            <div class="form-group">
+              <label for="price">Ціна</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">₴</span>
+                </div>
 
-                        <div class="form-group">
-                            <label for="category">Категорія</label>
-                            <select
-                                #category="ngModel"
-                                [(ngModel)]="product.category"
-                                name="category"
-                                id="category"
-                                class="custom-select"
-                                required
-                            >
-                                <option value=""></option>
-                                <option *ngFor="let c of categories" [value]="c.key">
-                                    {{ c.name }}
-                                </option>
-                            </select>
-                            <div class="alert alert-danger" *ngIf="category.touched && category.invalid">
-                                Категорія є обов'язковою.
-                            </div>
-                        </div>
+                <input
+                  #price="ngModel"
+                  [(ngModel)]="product.price"
+                  name="price"
+                  type="number"
+                  class="form-control"
+                  id="price"
+                  required
+                  [min]="0"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">.00</span>
+                </div>
+              </div>
+              <div
+                class="alert alert-danger"
+                *ngIf="price.touched && price.invalid"
+              >
+                <div *ngIf="price.errors.required">
+                  Ціна є обов'язковою (в грн.).
+                </div>
+                <div *ngIf="price.errors.min">Ціна має бути 0 або більше.</div>
+              </div>
+            </div>
 
-                        <div class="form-group">
-                            <label for="imageUrl">URL Зображення</label>
-                            <input 
-                                #imageUrl="ngModel"
-                                [(ngModel)]="product.imageUrl"
-                                name="imageUrl"
-                                type="url" 
-                                class="form-control" 
-                                id="imageUrl" 
-                                required
-                                url>
-                            <div class="alert alert-danger" *ngIf="imageUrl.touched && imageUrl.invalid">
-                                <div *ngIf="imageUrl.errors.required">URL зображення є обов'язковим.</div> 
-                                <div *ngIf="imageUrl.errors.url">URL є некоректним.</div> 
-                            </div>
-                        </div>
-            
-                        <div class="form-group">
-                            <label for="description">Детальний опис товару</label>
-                            <textarea 
-                                [(ngModel)]="product.description"
-                                name="description"
-                                class="form-control" 
-                                id="description" 
-                                rows="10"></textarea>
-                        </div>
-                        <button [disabled]="f.invalid" type="submit" class="btn btn-primary">Зберегти</button>
-                        <button *ngIf="id" type="button" class="btn btn-danger" (click)="delete()">Видалити</button>
-                  </ng-template>
-                </li>
-                <li [ngbNavItem]="2">
-                  <a ngbNavLink>Властивості</a>
-                  <ng-template ngbNavContent>
-                        <div *ngIf="featureTypes as featureTypes">
-                            <div *ngFor="let ft of featureTypes; index as i" class="form-group">
-                                <label for="{{ ft.key }}">{{ i + 1 }}. {{ ft.name }}</label>
-                                <ng-template #canSelectOneFeature>
-                                    <div *ngFor="let f of ft.features | keyvalue" class="custom-control custom-radio">
-                                        <input 
-                                            type="radio" 
-                                            id="{{ f.key }}"
-                                            [checked]="product.features[f.key]"
-                                            (click)="onRadioButtonClick(ft.key, f)"
-                                            name="{{ ft.key }}" 
-                                            class="custom-control-input">
-                                        <label class="custom-control-label" for="{{ f.key }}">{{ f.value.name }}</label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                        <input 
-                                            type="radio" 
-                                            id="{{ i }}"
-                                            name="{{ ft.key }}"
-                                            [value]="null" 
-                                            (change)="onRadioButtonClick(ft.key)"
-                                            class="custom-control-input" 
-                                            checked="">
-                                        <label class="custom-control-label" for="{{ i }}">Не обирати</label>
-                                    </div>
-                                </ng-template>
-                
-                                <div *ngIf="ft.canSelectManyFeatures; else canSelectOneFeature">
-                                    <div *ngFor="let f of ft.features | keyvalue" class="custom-control custom-switch">
-                                        <input 
-                                            type="checkbox" 
-                                            class="custom-control-input" 
-                                            id="{{ f.key }}"
-                                            (change)="onCheckBoxChange(f)"
-                                            [checked]="product.features[f.key]">
-                                        <label class="custom-control-label" for="{{ f.key }}">
-                                            {{ f.value.name }}
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                  </ng-template>
-                </li>
-            </ul>
-            <div [ngbNavOutlet]="nav" class="mt-2"></div>
-        </form>
+            <div class="form-group">
+              <label for="power">Потужність</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">кВт</span>
+                </div>
+
+                <input
+                  #power="ngModel"
+                  [(ngModel)]="product.power"
+                  name="power"
+                  type="number"
+                  class="form-control"
+                  id="power"
+                  required
+                  [min]="0"
+                />
+              </div>
+              <div
+                class="alert alert-danger"
+                *ngIf="power.touched && power.invalid"
+              >
+                <div *ngIf="power.errors.required">
+                  Потужність є обов'язковою (в кВт).
+                </div>
+                <div *ngIf="power.errors.min">
+                  Потужність має бути 0 або більше.
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="category">Категорія</label>
+              <select
+                #category="ngModel"
+                [(ngModel)]="product.category"
+                name="category"
+                id="category"
+                class="custom-select"
+                required
+              >
+                <option value=""></option>
+                <option *ngFor="let c of categories" [value]="c.key">
+                  {{ c.name }}
+                </option>
+              </select>
+              <div
+                class="alert alert-danger"
+                *ngIf="category.touched && category.invalid"
+              >
+                Категорія є обов'язковою.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="imageUrl">URL Зображення</label>
+              <input
+                #imageUrl="ngModel"
+                [(ngModel)]="product.imageUrl"
+                name="imageUrl"
+                type="url"
+                class="form-control"
+                id="imageUrl"
+                required
+                url
+              />
+              <div
+                class="alert alert-danger"
+                *ngIf="imageUrl.touched && imageUrl.invalid"
+              >
+                <div *ngIf="imageUrl.errors.required">
+                  URL зображення є обов'язковим.
+                </div>
+                <div *ngIf="imageUrl.errors.url">URL є некоректним.</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="description">Детальний опис товару</label>
+              <textarea
+                [(ngModel)]="product.description"
+                name="description"
+                class="form-control"
+                id="description"
+                rows="10"
+              ></textarea>
+            </div>
+            <button
+              [disabled]="f.invalid"
+              type="submit"
+              class="btn btn-primary"
+            >
+              Зберегти
+            </button>
+            <button
+              *ngIf="id"
+              type="button"
+              class="btn btn-danger"
+              (click)="delete()"
+            >
+              Видалити
+            </button>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <a ngbNavLink>Властивості</a>
+          <ng-template ngbNavContent>
+            <selecting-features
+              [(features)]="product.features"
+              [featureTypes]="featureTypes"
+            >
+            </selecting-features>
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </form>
+  </div>
+  <div class="col-md-2"></div>
+  <br />
+  <div class="col-md-4" *ngIf="product.imageUrl">
+    <div class="sticky-top">
+      <product-card [product]="product"></product-card>
     </div>
-    <div class="col-md-2"></div>
-    <br/>
-    <div class="col-md-4" *ngIf="product.imageUrl">
-        <div class="sticky-top">
-            <product-card [product]="product"></product-card>
-        </div>
-    </div>
+  </div>
 </div>
-
-
-        
