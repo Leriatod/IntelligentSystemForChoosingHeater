@@ -38,13 +38,13 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   }
 
   private loadFeatureTypes() {
-    var subscription = this.featureTypeService.getAll()
+    let subscription = this.featureTypeService.getAll()
       .subscribe(featureTypes => this.featureTypes = featureTypes);
     this.subscriptions.push(subscription);
   }
 
   private loadCategories() {
-    var subscription = this.categoryService.getAll()
+    let subscription = this.categoryService.getAll()
       .subscribe(categories => this.categories = categories);
     this.subscriptions.push(subscription);
   }
@@ -54,7 +54,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     if (!this.id) return;
     this.isProductLoading = true; 
 
-    var subscription = this.productService.get(this.id).subscribe(product => {
+    let subscription = this.productService.get(this.id).subscribe(product => {
       if (!product) {
         this.navigateToAdminProducts();
         return;

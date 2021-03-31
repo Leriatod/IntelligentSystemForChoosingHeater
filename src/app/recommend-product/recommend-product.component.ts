@@ -41,7 +41,7 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
   }
 
   private loadProducts() {
-    var subscription = this.productService.getAll()
+    let subscription = this.productService.getAll()
       .subscribe(products => {
         products.forEach(p => this.query.push( { product: p, score: 0 } ) );
       });
@@ -49,7 +49,7 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
   }
 
   private loadFeatureTypes() {
-    var subscription = this.featureTypeService.getAll()
+    let subscription = this.featureTypeService.getAll()
       .subscribe(featureTypes => this.featureTypes = featureTypes);
     this.subscriptions.push(subscription);
   }
@@ -65,11 +65,11 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
 
   private sortProductsByMatchingFeaturesDesc() {
     this.query.forEach(item => {
-      var product = item.product;
-      var totalScore = 0;
+      let product = item.product;
+      let totalScore = 0;
 
       this.filter.features.forEach(feature => {
-        var productHasFeature = product.features.hasOwnProperty(feature.key);
+        let productHasFeature = product.features.hasOwnProperty(feature.key);
         if (productHasFeature) totalScore += feature.coeff;
       });
       item.score = totalScore;
@@ -78,7 +78,7 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
   }
 
   private filterProductsByMinPower() {
-    var minPower = this.filter.roomArea * this.POWER_PER_SQUARE_METER;
+    let minPower = this.filter.roomArea * this.POWER_PER_SQUARE_METER;
     this.recommendedProducts = _.filter(this.query, item => item.product.power >= minPower)
       .map(item => item.product);
   }
@@ -89,6 +89,6 @@ export class RecommendProductComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());   
   }
 }

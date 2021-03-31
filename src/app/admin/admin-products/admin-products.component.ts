@@ -73,9 +73,9 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
 
   private applySearching() {
     this.filteredProducts = _.filter(this.filteredProducts, p => {
-      var title = p.title.toLowerCase();
-      var template = this.filter.query.toLowerCase();
-      var hasString = title.includes(template);
+      let title = p.title.toLowerCase();
+      let template = this.filter.query.toLowerCase();
+      let hasString = title.includes(template);
       return hasString;
     });
   }
@@ -95,7 +95,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   }
 
   private applyPagining() {
-    var startIndex = (this.filter.page - 1) * this.PAGE_SIZE;
+    let startIndex = (this.filter.page - 1) * this.PAGE_SIZE;
     this.displayedProducts = _.rest(this.filteredProducts, startIndex);
     this.displayedProducts = _.take(this.displayedProducts, this.PAGE_SIZE);
   }

@@ -22,7 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
       
       this.userService.save(user);
 
-      var returnUrl = localStorage.getItem('returnUrl');
+      let returnUrl = localStorage.getItem('returnUrl');
       
       if (!returnUrl) return;
       

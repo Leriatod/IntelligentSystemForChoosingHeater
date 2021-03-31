@@ -24,7 +24,7 @@ export class SelectingFeaturesComponent {
   }
 
   onRadioButtonClick(featureTypeKey: string, feature) {
-    var radioButtons = document.getElementsByName(featureTypeKey);
+    let radioButtons = document.getElementsByName(featureTypeKey);
 
     radioButtons.forEach((radio: any) => {
       if (radio.checked && radio.value) {
