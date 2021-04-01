@@ -3,10 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/shared/models/product';
-import { ProductService } from 'src/app/product.service';
+import { ProductService } from 'src/app/shared/services/product.service';
 
-import { CategoryService } from './../../category.service';
-import { FeatureTypeService } from './../../feature-type.service';
+import { CategoryService } from '../../shared/services/category.service';
+import { FeatureTypeService } from '../../shared/services/feature-type.service';
 import { Category } from '../../shared/models/category';
 import { FeatureType } from '../../shared/models/feature-type';
 

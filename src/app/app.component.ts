@@ -1,7 +1,7 @@
-import { UserService } from './user.service';
+import { UserService } from './shared/services/user.service';
 import { Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthService } from './auth.service';
+import { AuthService } from './shared/services/auth.service';
 import { Subscription } from 'rxjs';
 
 @Component({

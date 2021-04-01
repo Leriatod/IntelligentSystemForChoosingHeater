@@ -1,4 +1,4 @@
-import { FeatureType } from './shared/models/feature-type';
+import { FeatureType } from '../models/feature-type';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { map } from 'rxjs/operators';
