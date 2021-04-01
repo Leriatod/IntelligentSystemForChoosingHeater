@@ -4,15 +4,15 @@ import * as _ from 'underscore';
 
 import { CategoryService } from '../category.service';
 import { Product } from '../models/product';
-import { Category } from './../models/category';
-import { ProductService } from './../product.service';
+import { Category } from '../models/category';
+import { ProductService } from '../product.service';
 
 @Component({
-  selector: 'home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.scss']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[];
   filteredProducts: Product[];
   categories: Category[];

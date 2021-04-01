@@ -22,7 +22,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard as AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth.service';
 import { FeatureTypeService } from './feature-type.service';
-import { HomeComponent } from './home/home.component';
+import { ProductsComponent } from './products/products.component';
 import { LoginComponent } from './login/login.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -47,7 +47,7 @@ import { SelectingFeaturesComponent } from './admin/product-form/selecting-featu
     AdminProductsComponent,
     AdminOrdersComponent,
     ProductFormComponent,
-    HomeComponent,
+    ProductsComponent,
     MyOrdersComponent,
     SpinnerComponent,
     ProductViewComponent,
@@ -76,7 +76,7 @@ import { SelectingFeaturesComponent } from './admin/product-form/selecting-featu
     NgxSliderModule,
 
     RouterModule.forRoot([
-      { path: '', component: HomeComponent },
+      { path: '', component: ProductsComponent },
       { path: 'login', component: LoginComponent },
       { path: 'products/:id', component: ProductViewComponent },
       { path: 'recommend-product', component: RecommendProductComponent },
