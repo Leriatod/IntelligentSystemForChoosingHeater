@@ -1,4 +1,4 @@
-import { Category } from './models/category';
+import { Category } from './shared/models/category';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { map } from 'rxjs/operators';

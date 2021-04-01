@@ -2,13 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { Product } from 'src/app/models/product';
+import { Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/product.service';
 
 import { CategoryService } from './../../category.service';
 import { FeatureTypeService } from './../../feature-type.service';
-import { Category } from './../../models/category';
-import { FeatureType } from './../../models/feature-type';
+import { Category } from '../../shared/models/category';
+import { FeatureType } from '../../shared/models/feature-type';
 
 
 @Component({

@@ -2,7 +2,7 @@ import { Options } from '@angular-slider/ngx-slider';
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { SortableComponent } from 'ngx-bootstrap/sortable';
 
-import { FeatureType } from './../../models/feature-type';
+import { FeatureType } from '../../shared/models/feature-type';
 
 @Component({
   selector: 'user-dialog',

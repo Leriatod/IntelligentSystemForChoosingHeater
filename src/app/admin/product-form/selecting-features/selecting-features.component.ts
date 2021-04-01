@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FeatureType } from 'src/app/models/feature-type';
+import { FeatureType } from 'src/app/shared/models/feature-type';
 
 @Component({
   selector: 'selecting-features',

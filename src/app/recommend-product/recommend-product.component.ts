@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Product } from 'src/app/models/product';
+import { Product } from 'src/app/shared/models/product';
 import * as _ from 'underscore';
 import { FeatureTypeService } from '../feature-type.service';
-import { FeatureType } from '../models/feature-type';
+import { FeatureType } from '../shared/models/feature-type';
 import { ProductService } from './../product.service';
 
 

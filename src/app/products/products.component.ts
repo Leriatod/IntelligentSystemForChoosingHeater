@@ -3,8 +3,8 @@ import { Subscription } from 'rxjs';
 import * as _ from 'underscore';
 
 import { CategoryService } from '../category.service';
-import { Product } from '../models/product';
-import { Category } from '../models/category';
+import { Product } from '../shared/models/product';
+import { Category } from '../shared/models/category';
 import { ProductService } from '../product.service';
 
 @Component({

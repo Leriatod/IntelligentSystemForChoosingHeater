@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { ProductService } from 'src/app/product.service';
-import { Product } from '../models/product';
+import { Product } from '../shared/models/product';
 
 @Component({
   selector: 'app-product-view',
