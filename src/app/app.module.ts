@@ -16,9 +16,9 @@ import { environment } from 'src/environments/environment';
 import { AdminModule } from './admin/admin.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './core/components/login/login.component';
+import { CoreModule } from './core/core.module';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { ProductViewComponent } from './product-view/product-view.component';
 import { ProductsComponent } from './products/products.component';
 import { DialogComponent } from './recommend-product/dialog/dialog.component';
@@ -32,8 +32,7 @@ import { SharedModule } from './shared/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
-    NavBarComponent,
-    LoginComponent,
+    
 
     ProductsComponent,
     MyOrdersComponent,
@@ -48,7 +47,8 @@ import { SharedModule } from './shared/shared.module';
   imports: [
     SharedModule,
     AdminModule,
-
+    CoreModule,
+    
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
