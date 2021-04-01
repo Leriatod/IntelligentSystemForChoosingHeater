@@ -5,10 +5,10 @@ import { Subscription } from 'rxjs';
 import { Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/product.service';
 
-import { CategoryService } from '../../shared/services/category.service';
-import { FeatureTypeService } from '../../shared/services/feature-type.service';
-import { Category } from '../../shared/models/category';
-import { FeatureType } from '../../shared/models/feature-type';
+import { CategoryService } from '../../../shared/services/category.service';
+import { FeatureTypeService } from '../../../shared/services/feature-type.service';
+import { Category } from '../../../shared/models/category';
+import { FeatureType } from '../../../shared/models/feature-type';
 
 
 @Component({

@@ -1,4 +1,3 @@
-import { SharedModule } from './shared/shared.module';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
@@ -14,11 +13,7 @@ import { SortableModule } from 'ngx-bootstrap/sortable';
 import { ToastrModule } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 
-import { AdminAuthGuard as AdminAuthGuard } from './admin-auth-guard.service';
-import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
-import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
-import { ProductFormComponent } from './admin/product-form/product-form.component';
-import { SelectingFeaturesComponent } from './admin/product-form/selecting-features/selecting-features.component';
+import { AdminModule } from './admin/admin.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -32,28 +27,27 @@ import {
 } from './recommend-product/display-recommended-products/display-recommended-products.component';
 import { RecommendProductComponent } from './recommend-product/recommend-product.component';
 import { AuthGuard as AuthGuard } from './shared/services/auth-guard.service';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     LoginComponent,
-    AdminProductsComponent,
-    AdminOrdersComponent,
-    ProductFormComponent,
+
     ProductsComponent,
     MyOrdersComponent,
 
     ProductViewComponent,
-    
+
     RecommendProductComponent,
-    
+
     DialogComponent,
     DisplayRecommendedProductsComponent,
-    SelectingFeaturesComponent
   ],
   imports: [
     SharedModule,
+    AdminModule,
 
     BrowserModule,
     BrowserAnimationsModule,
@@ -77,17 +71,14 @@ import { AuthGuard as AuthGuard } from './shared/services/auth-guard.service';
       { path: 'products/:id', component: ProductViewComponent },
       { path: 'recommend-product', component: RecommendProductComponent },
 
-      { path: 'my-orders', component: MyOrdersComponent, canActivate: [AuthGuard] },
-
-      { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-      { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-      { path: 'admin/products/new', component: ProductFormComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-      { path: 'admin/products/edit/:id', component: ProductFormComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-    ])
+      {
+        path: 'my-orders',
+        component: MyOrdersComponent,
+        canActivate: [AuthGuard],
+      },
+    ]),
   ],
-  providers: [
-    AdminAuthGuard
-  ],
-  bootstrap: [AppComponent]
+  providers: [],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
