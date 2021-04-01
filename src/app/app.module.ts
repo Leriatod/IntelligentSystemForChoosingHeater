@@ -1,3 +1,4 @@
+import { SharedModule } from './shared/shared.module';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
@@ -17,27 +18,20 @@ import { AdminAuthGuard as AdminAuthGuard } from './admin-auth-guard.service';
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
+import { SelectingFeaturesComponent } from './admin/product-form/selecting-features/selecting-features.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthGuard as AuthGuard } from './shared/services/auth-guard.service';
-import { AuthService } from './shared/services/auth.service';
-import { FeatureTypeService } from './shared/services/feature-type.service';
-import { ProductsComponent } from './products/products.component';
 import { LoginComponent } from './login/login.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { ProductCardComponent } from './shared/components/product-card/product-card.component';
 import { ProductViewComponent } from './product-view/product-view.component';
-import { ProductService } from './shared/services/product.service';
+import { ProductsComponent } from './products/products.component';
 import { DialogComponent } from './recommend-product/dialog/dialog.component';
 import {
   DisplayRecommendedProductsComponent,
 } from './recommend-product/display-recommended-products/display-recommended-products.component';
 import { RecommendProductComponent } from './recommend-product/recommend-product.component';
-import { BsStepperComponent } from './shared/components/bs-stepper/bs-stepper.component';
-import { SpinnerComponent } from './shared/components/spinner/spinner.component';
-import { UserService } from './shared/services/user.service';
-import { SelectingFeaturesComponent } from './admin/product-form/selecting-features/selecting-features.component';
+import { AuthGuard as AuthGuard } from './shared/services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -49,16 +43,18 @@ import { SelectingFeaturesComponent } from './admin/product-form/selecting-featu
     ProductFormComponent,
     ProductsComponent,
     MyOrdersComponent,
-    SpinnerComponent,
+
     ProductViewComponent,
-    ProductCardComponent,
+    
     RecommendProductComponent,
-    BsStepperComponent,
+    
     DialogComponent,
     DisplayRecommendedProductsComponent,
     SelectingFeaturesComponent
   ],
   imports: [
+    SharedModule,
+
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -90,11 +86,6 @@ import { SelectingFeaturesComponent } from './admin/product-form/selecting-featu
     ])
   ],
   providers: [
-    AuthService,
-    UserService,
-    ProductService,
-    FeatureTypeService,
-    AuthGuard,
     AdminAuthGuard
   ],
   bootstrap: [AppComponent]
