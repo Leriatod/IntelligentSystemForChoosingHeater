@@ -1,5 +1,13 @@
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CustomFormsModule } from 'ng2-validation';
+import { SortableModule } from 'ngx-bootstrap/sortable';
+import { ToastrModule } from 'ngx-toastr';
 
 import { BsStepperComponent } from './components/bs-stepper/bs-stepper.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
@@ -13,7 +21,15 @@ import { UserService } from './services/user.service';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    CustomFormsModule,
+    NgbModule,
+    NgxSliderModule,
+    SortableModule.forRoot(),
+    ToastrModule.forRoot(),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
   ],
   declarations: [
     ProductCardComponent,
@@ -23,7 +39,16 @@ import { UserService } from './services/user.service';
   exports: [
     ProductCardComponent,
     SpinnerComponent,
-    BsStepperComponent
+    BsStepperComponent,
+    CommonModule,
+    FormsModule,
+    CustomFormsModule,
+    NgbModule,
+    NgxSliderModule,
+    SortableModule,
+    ToastrModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   providers: [
     AuthService,
