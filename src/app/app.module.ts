@@ -12,16 +12,13 @@ import { CustomFormsModule } from 'ng2-validation';
 import { SortableModule } from 'ngx-bootstrap/sortable';
 import { ToastrModule } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
+
 import { AdminModule } from './admin/admin.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './core/components/login/login.component';
 import { CoreModule } from './core/core.module';
-import { DialogComponent } from './recommend-product/dialog/dialog.component';
-import {
-  DisplayRecommendedProductsComponent
-} from './recommend-product/display-recommended-products/display-recommended-products.component';
-import { RecommendProductComponent } from './recommend-product/recommend-product.component';
+import { IntelligentSystemModule } from './intelligent-system/intelligent-system.module';
 import { SharedModule } from './shared/shared.module';
 import { ProductsComponent } from './shopping/components/products/products.component';
 import { ShoppingModule } from './shopping/shopping.module';
@@ -29,17 +26,14 @@ import { ShoppingModule } from './shopping/shopping.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    
-    RecommendProductComponent,
-    DialogComponent,
-    DisplayRecommendedProductsComponent,
+    AppComponent
   ],
   imports: [
     SharedModule,
     AdminModule,
     CoreModule,
     ShoppingModule,
+    IntelligentSystemModule,
 
     BrowserModule,
     BrowserAnimationsModule,
@@ -59,6 +53,7 @@ import { ShoppingModule } from './shopping/shopping.module';
 
     RouterModule.forRoot([
       { path: '', component: ProductsComponent },
+      { path: '**', component: ProductsComponent },
       { path: 'login', component: LoginComponent }
     ]),
   ],
