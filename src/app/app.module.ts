@@ -12,35 +12,26 @@ import { CustomFormsModule } from 'ng2-validation';
 import { SortableModule } from 'ngx-bootstrap/sortable';
 import { ToastrModule } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
-
 import { AdminModule } from './admin/admin.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './core/components/login/login.component';
 import { CoreModule } from './core/core.module';
-import { MyOrdersComponent } from './my-orders/my-orders.component';
-import { ProductViewComponent } from './product-view/product-view.component';
-import { ProductsComponent } from './products/products.component';
 import { DialogComponent } from './recommend-product/dialog/dialog.component';
 import {
-  DisplayRecommendedProductsComponent,
+  DisplayRecommendedProductsComponent
 } from './recommend-product/display-recommended-products/display-recommended-products.component';
 import { RecommendProductComponent } from './recommend-product/recommend-product.component';
-import { AuthGuard as AuthGuard } from './shared/services/auth-guard.service';
 import { SharedModule } from './shared/shared.module';
+import { ProductsComponent } from './shopping/components/products/products.component';
+import { ShoppingModule } from './shopping/shopping.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     
-
-    ProductsComponent,
-    MyOrdersComponent,
-
-    ProductViewComponent,
-
     RecommendProductComponent,
-
     DialogComponent,
     DisplayRecommendedProductsComponent,
   ],
@@ -48,7 +39,8 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
     AdminModule,
     CoreModule,
-    
+    ShoppingModule,
+
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -67,15 +59,7 @@ import { SharedModule } from './shared/shared.module';
 
     RouterModule.forRoot([
       { path: '', component: ProductsComponent },
-      { path: 'login', component: LoginComponent },
-      { path: 'products/:id', component: ProductViewComponent },
-      { path: 'recommend-product', component: RecommendProductComponent },
-
-      {
-        path: 'my-orders',
-        component: MyOrdersComponent,
-        canActivate: [AuthGuard],
-      },
+      { path: 'login', component: LoginComponent }
     ]),
   ],
   providers: [],

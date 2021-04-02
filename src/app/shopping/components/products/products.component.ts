@@ -2,10 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import * as _ from 'underscore';
 
-import { CategoryService } from '../shared/services/category.service';
-import { Product } from '../shared/models/product';
-import { Category } from '../shared/models/category';
-import { ProductService } from '../shared/services/product.service';
+import { CategoryService } from '../../../shared/services/category.service';
+import { Product } from '../../../shared/models/product';
+import { Category } from '../../../shared/models/category';
+import { ProductService } from '../../../shared/services/product.service';
 
 @Component({
   selector: 'products',
