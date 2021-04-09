@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -30,6 +31,7 @@ import { UserService } from './services/user.service';
     ToastrModule.forRoot(),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    RouterModule.forChild([])
   ],
   declarations: [
     ProductCardComponent,

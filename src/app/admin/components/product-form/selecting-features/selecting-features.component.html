@@ -35,7 +35,7 @@
     <div *ngIf="ft.canSelectManyFeatures; else canSelectOneFeature">
       <div
         *ngFor="let f of ft.features | keyvalue"
-        class="custom-control custom-switch"
+        class="custom-control custom-checkbox"
       >
         <input
           type="checkbox"
