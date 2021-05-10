@@ -16,7 +16,9 @@
         [powerPerSquareMeter]="filter.powerPerSquareMeter"
       >
       </user-dialog>
-      <button (click)="onStepChanged(currentStep + 1)" class="btn btn-primary">Далі</button>
+      <button (click)="onStepChanged(currentStep + 1)" class="btn btn-primary">
+        Далі
+      </button>
     </ng-container>
   </div>
 
@@ -27,6 +29,8 @@
       [productsNumberToDisplay]="filter.productsNumberToDisplay"
     >
     </display-recommended-products>
-    <button (click)="onStepChanged(currentStep - 1)" class="btn btn-primary">Назад</button>
+    <button (click)="onStepChanged(currentStep - 1)" class="btn btn-primary">
+      Назад
+    </button>
   </div>
 </div>

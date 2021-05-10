@@ -1,36 +1,42 @@
 <div *ngIf="sortedProductsByMatchingFeaturesDesc.length === 0">
-    <h6 style="padding-top: 15px;">
-        На данний момент відсутні товари, які зодовольняють ваш запит.
-    </h6> 
+  <h6 style="padding-top: 15px">
+    На данний момент відсутні товари, які зодовольняють ваш запит.
+  </h6>
 </div>
 
-<div *ngFor="let p of sortedProductsByMatchingFeaturesDesc; index as i" class="row">
-    <ng-container *ngIf="i < productsNumberToDisplay">
-        <div class="col-md-1"></div>
-        <div class="col-md-4" style="padding-bottom: 40px;">
-            <product-card [product]="p" [referenceToProductIsIncluded]="true"></product-card>
+<div
+  *ngFor="let p of sortedProductsByMatchingFeaturesDesc; index as i"
+  class="row"
+>
+  <ng-container *ngIf="i < productsNumberToDisplay">
+    <div class="col-md-1"></div>
+    <div class="col-md-4" style="padding-bottom: 40px">
+      <product-card
+        [product]="p"
+        [referenceToProductIsIncluded]="true"
+      ></product-card>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-4">
+      <div class="text-right">
+        <div *ngFor="let f of selectedFeatures">
+          <div class="text-success" *ngIf="p.features[f.key]">
+            {{ f.name }}
+            <i class="fa fa-check"></i>
+          </div>
         </div>
-        <div class="col-md-2"></div>
-        <div class="col-md-4">
-            <div class="text-right">
-                <div *ngFor="let f of selectedFeatures">
-                    <div class="text-success" *ngIf="p.features[f.key]">
-                        {{ f.name }}
-                        <i class="fa fa-check"></i>
-                    </div>
-                </div>
-                <div style="padding-top: 30px;"></div>
-                <div *ngFor="let f of selectedFeatures">
-                    <div class="text-danger" *ngIf="!p.features[f.key]">
-                        {{ f.name }}
-                        <i class="fa fa-times"></i>
-                    </div>
-                </div>
-            </div>
+        <div style="padding-top: 30px"></div>
+        <div *ngFor="let f of selectedFeatures">
+          <div class="text-danger" *ngIf="!p.features[f.key]">
+            {{ f.name }}
+            <i class="fa fa-times"></i>
+          </div>
         </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-12">
-            <hr>
-        </div>
-    </ng-container> 
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-12">
+      <hr />
+    </div>
+  </ng-container>
 </div>

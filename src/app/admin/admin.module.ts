@@ -39,7 +39,7 @@ import { AdminAuthGuard } from './services/admin-auth-guard.service';
     AdminProductsComponent,
     AdminOrdersComponent,
     ProductFormComponent,
-    SelectingFeaturesComponent
+    SelectingFeaturesComponent,
   ],
   providers: [AdminAuthGuard],
 })

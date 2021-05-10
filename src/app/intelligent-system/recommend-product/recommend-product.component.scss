@@ -1,10 +1,10 @@
 .fade-in {
-    animation: 500ms fadeIn;
-    animation-fill-mode: forwards;
-    
-    visibility: hidden;
-  }
-  
+  animation: 500ms fadeIn;
+  animation-fill-mode: forwards;
+
+  visibility: hidden;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;

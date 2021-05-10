@@ -1,13 +1,17 @@
 <div id="stepper" class="bs-stepper">
-    <div class="bs-stepper-header" >
-        <ng-container *ngFor="let sn of stepNames; index as i">
-            <div class="step" (click)="changeStep(i)" [class.active]="i === currentStep">
-                <button class="step-trigger">
-                    <span class="bs-stepper-circle">{{ i + 1 }}</span>
-                    <span class="bs-stepper-label">{{ sn }}</span>
-                </button>
-            </div>
-            <div class="line" *ngIf="i < stepNames.length - 1"></div>
-        </ng-container>
-    </div>
+  <div class="bs-stepper-header">
+    <ng-container *ngFor="let sn of stepNames; index as i">
+      <div
+        class="step"
+        (click)="changeStep(i)"
+        [class.active]="i === currentStep"
+      >
+        <button class="step-trigger">
+          <span class="bs-stepper-circle">{{ i + 1 }}</span>
+          <span class="bs-stepper-label">{{ sn }}</span>
+        </button>
+      </div>
+      <div class="line" *ngIf="i < stepNames.length - 1"></div>
+    </ng-container>
+  </div>
 </div>

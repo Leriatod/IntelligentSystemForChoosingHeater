@@ -6,16 +6,8 @@ import { LoginComponent } from './components/login/login.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    RouterModule.forChild([])
-  ],
-  declarations: [
-    NavBarComponent,
-    LoginComponent
-  ],
-  exports: [
-    NavBarComponent
-  ]
+  imports: [SharedModule, RouterModule.forChild([])],
+  declarations: [NavBarComponent, LoginComponent],
+  exports: [NavBarComponent],
 })
-export class CoreModule { }
+export class CoreModule {}

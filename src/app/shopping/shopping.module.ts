@@ -18,12 +18,8 @@ import { ProductsComponent } from './components/products/products.component';
         component: MyOrdersComponent,
         canActivate: [AuthGuard],
       },
-    ])
+    ]),
   ],
-  declarations: [
-    MyOrdersComponent,
-    ProductsComponent,
-    ProductViewComponent,
-  ]
+  declarations: [MyOrdersComponent, ProductsComponent, ProductViewComponent],
 })
-export class ShoppingModule { }
+export class ShoppingModule {}

@@ -83,7 +83,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
         p.category === this.filter.category || !this.filter.category;
       return hasTemplate && hasCategory;
     });
+
     if (this.filter.isOrderedByPriceAsc === null) return;
+
     const sign = 2 * this.filter.isOrderedByPriceAsc - 1;
     this.filteredProducts = _.sortBy(
       this.filteredProducts,

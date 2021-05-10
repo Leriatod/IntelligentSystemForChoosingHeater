@@ -6,7 +6,6 @@
     <button
       (click)="toggle()"
       class="navbar-toggler"
-      [class.collapsed]="!isExpanded"
       type="button"
       data-toggle="collapse"
       data-target="#navbarsExampleDefault"
@@ -18,7 +17,7 @@
 
     <div
       class="collapse navbar-collapse"
-      [class.show]="isExpanded"
+      [ngbCollapse]="!isExpanded"
       id="navbarsExampleDefault"
     >
       <ul class="navbar-nav mr-auto">

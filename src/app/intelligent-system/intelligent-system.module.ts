@@ -3,9 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared/shared.module';
 import { DialogComponent } from './recommend-product/dialog/dialog.component';
-import {
-  DisplayRecommendedProductsComponent,
-} from './recommend-product/display-recommended-products/display-recommended-products.component';
+import { DisplayRecommendedProductsComponent } from './recommend-product/display-recommended-products/display-recommended-products.component';
 import { RecommendProductComponent } from './recommend-product/recommend-product.component';
 
 @NgModule({

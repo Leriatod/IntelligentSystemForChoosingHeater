@@ -5,22 +5,21 @@ import { AuthService } from '../../../shared/services/auth.service';
 @Component({
   selector: 'nav-bar',
   templateUrl: './nav-bar.component.html',
-  styleUrls: ['./nav-bar.component.scss']
+  styleUrls: ['./nav-bar.component.scss'],
 })
 export class NavBarComponent implements OnInit {
   isExpanded = false;
   appUser: AppUser;
 
-  constructor(private auth: AuthService) { }
-  
+  constructor(private auth: AuthService) {}
+
   ngOnInit() {
-    this.auth.appUser$.subscribe(appUser => this.appUser = appUser);
+    this.auth.appUser$.subscribe((appUser) => (this.appUser = appUser));
   }
 
   logout() {
     this.auth.logout();
   }
-
 
   toggle() {
     this.isExpanded = !this.isExpanded;

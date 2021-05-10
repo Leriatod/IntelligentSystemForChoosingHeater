@@ -2,38 +2,37 @@
   <spinner></spinner>
 </ng-template>
 <div *ngIf="!isProductLoading; else productIsLoading" class="row">
-    <div class="col-md-4">
-      <div class="sticky-top">
-        <product-card [product]="product"></product-card>  
-      </div>
+  <div class="col-md-4">
+    <div class="sticky-top">
+      <product-card [product]="product"></product-card>
     </div>
-    <div class="col-md-1"></div>
-    <div class="col-md-7">
-        <ul ngbNav #nav="ngbNav" [(activeId)]="activeTabId" class="nav-tabs">
-            <li [ngbNavItem]="1">
-              <a ngbNavLink>Опис товару</a>
-              <ng-template ngbNavContent>
-                <p class="pre-line-text">
-                  {{ product.description }}
-                </p>
-              </ng-template>
+  </div>
+  <div class="col-md-1"></div>
+  <div class="col-md-7">
+    <ul ngbNav #nav="ngbNav" [(activeId)]="activeTabId" class="nav-tabs">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink>Опис товару</a>
+        <ng-template ngbNavContent>
+          <p class="pre-line-text">
+            {{ product.description }}
+          </p>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink>Властивості</a>
+        <ng-template ngbNavContent>
+          <ul class="list-group list-group-flush">
+            <li
+              *ngFor="let f of product.features | keyvalue"
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              {{ f.value.name }}
+              <i class="fa fa-check text-success"></i>
             </li>
-            <li [ngbNavItem]="2">
-              <a ngbNavLink>Властивості</a>
-              <ng-template ngbNavContent>
-                <ul class="list-group list-group-flush">
-                  <li *ngFor="let f of product.features | keyvalue" class="list-group-item d-flex justify-content-between align-items-center ">
-                    {{ f.value.name }}
-                    <i class="fa fa-check text-success"></i>
-                  </li>
-                </ul>
-              </ng-template>
-            </li>
-        </ul>
-        <div [ngbNavOutlet]="nav" class="mt-2"></div>
-    </div>
+          </ul>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+  </div>
 </div>
-
-
-
-  
