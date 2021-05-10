@@ -4,14 +4,14 @@ import { FeatureType } from 'src/app/shared/models/feature-type';
 @Component({
   selector: 'selecting-features',
   templateUrl: './selecting-features.component.html',
-  styleUrls: ['./selecting-features.component.scss']
+  styleUrls: ['./selecting-features.component.scss'],
 })
 export class SelectingFeaturesComponent {
   @Output() featuresChange = new EventEmitter();
-  @Input() features: { 
-    [featureKey: string]: { 
-      name: string
-    } 
+  @Input() features: {
+    [featureKey: string]: {
+      name: string;
+    };
   } = {};
   @Input() featureTypes: FeatureType[];
 
@@ -24,7 +24,7 @@ export class SelectingFeaturesComponent {
   }
 
   onRadioButtonClick(featureTypeKey: string, feature) {
-    let radioButtons = document.getElementsByName(featureTypeKey);
+    const radioButtons = document.getElementsByName(featureTypeKey);
 
     radioButtons.forEach((radio: any) => {
       if (radio.checked && radio.value) {

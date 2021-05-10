@@ -8,21 +8,23 @@ import { Observable, of } from 'rxjs';
 import { AppUser } from '../models/app-user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   user$: Observable<firebase.User>;
 
-  constructor(private afAuth: AngularFireAuth,
-              private route: ActivatedRoute,
-              private userService: UserService) { 
+  constructor(
+    private afAuth: AngularFireAuth,
+    private route: ActivatedRoute,
+    private userService: UserService
+  ) {
     this.user$ = afAuth.authState;
   }
-  
+
   login() {
-    let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
     localStorage.setItem('returnUrl', returnUrl);
-    
+
     this.afAuth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
   }
 
@@ -32,7 +34,7 @@ export class AuthService {
 
   get appUser$(): Observable<AppUser> {
     return this.user$.pipe(
-      switchMap(user => {
+      switchMap((user) => {
         if (user) return this.userService.get(user.uid);
         return of(null);
       })

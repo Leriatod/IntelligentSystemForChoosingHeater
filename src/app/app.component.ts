@@ -7,25 +7,27 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
   subscription: Subscription;
-  
-  constructor(private auth: AuthService,
-              private userService: UserService,
-              private router: Router) {}
+
+  constructor(
+    private auth: AuthService,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.subscription = this.auth.user$.subscribe(user => {
+    this.subscription = this.auth.user$.subscribe((user) => {
       if (!user) return;
-      
+
       this.userService.save(user);
 
-      let returnUrl = localStorage.getItem('returnUrl');
-      
+      const returnUrl = localStorage.getItem('returnUrl');
+
       if (!returnUrl) return;
-      
+
       localStorage.removeItem('returnUrl');
       this.router.navigateByUrl(returnUrl);
     });
@@ -34,5 +36,4 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-
 }
