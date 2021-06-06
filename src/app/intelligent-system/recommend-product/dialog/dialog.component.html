@@ -30,6 +30,8 @@
           <div
             *ngFor="let f of ft.features | keyvalue"
             class="custom-control custom-radio"
+            [ngbTooltip]="f.value.description"
+            placement="top"
           >
             <input
               type="radio"
@@ -62,6 +64,9 @@
           <div
             *ngFor="let f of ft.features | keyvalue"
             class="custom-control custom-checkbox"
+            disableTooltip="!f.description"
+            [ngbTooltip]="f.value.description"
+            placement="top"
           >
             <input
               type="checkbox"

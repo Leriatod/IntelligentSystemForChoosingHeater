@@ -1,13 +1,10 @@
-<div *ngIf="sortedProductsByMatchingFeaturesDesc.length === 0">
+<div *ngIf="sortedProductsByTotalScoreDesc.length === 0">
   <h6 style="padding-top: 15px">
     На данний момент відсутні товари, які зодовольняють ваш запит.
   </h6>
 </div>
 
-<div
-  *ngFor="let p of sortedProductsByMatchingFeaturesDesc; index as i"
-  class="row"
->
+<div *ngFor="let p of sortedProductsByTotalScoreDesc; index as i" class="row">
   <ng-container *ngIf="i < productsNumberToDisplay">
     <div class="col-md-1"></div>
     <div class="col-md-4" style="padding-bottom: 40px">

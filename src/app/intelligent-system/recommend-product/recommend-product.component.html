@@ -24,7 +24,7 @@
 
   <div class="fade-in" *ngIf="currentStep === 1">
     <display-recommended-products
-      [sortedProductsByMatchingFeaturesDesc]="recommendedProducts"
+      [sortedProductsByTotalScoreDesc]="recommendedProducts"
       [selectedFeatures]="filter.features"
       [productsNumberToDisplay]="filter.productsNumberToDisplay"
     >
