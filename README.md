@@ -1,5 +1,7 @@
 # Rio
 
+Web app for choosing a heater that satisfies your needs the most. The system recommends the heaters according to the selected features and their priorities in the list (the higher priority in the list, the more important it is for the customer).
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.2.
 
 ## Development server
